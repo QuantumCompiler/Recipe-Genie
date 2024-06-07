@@ -34,7 +34,8 @@ lack of some needed resources>
 Mitigation Strategy for above risks
 
 #### Development Method
-<Development method: scrum, kanban, waterfall: with specifics!>
+We are going to choose a kanban development method. This agile approach will work for us due to the continuous iteration on adding features and refining the product for each milestone incrementally. We believe it will be the best way we can tackle such a project where we will have to learn a lot about how to build it, add features to an already working product, and add tests along the way. The kanban method works particularly well with our product since we have very busy schedules and will need to be able to view eachothers completed, currently in progress, and future tasks. This will alow us to more fluidly load balance if needed and ensure that tasks that need to work in conjunction are going to be focused on around the same time.  
+
 
 #### Project Tracking
 Link to Trello: https://trello.com/b/UmIWjXL6/software-development-methods-and-tools-project-team-4
