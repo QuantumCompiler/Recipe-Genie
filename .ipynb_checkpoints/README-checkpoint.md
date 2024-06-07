@@ -37,11 +37,7 @@ Mitigation Strategy for above risks
 <Development method: scrum, kanban, waterfall: with specifics!>
 
 #### Project Tracking
-Link to Trello: https://trello.com/b/UmIWjXL6/software-development-methods-and-tools-project-team-4
-
-We will track our project through Trello, which is effectively a tool based on Kanban principles. We plan to have a product backlog, sprint backlog, and burndown chart in Trello, each on a separate notecard. We will also have personal notecards to list our tasks for the sprints and our progress on those tasks. We will likely keep a general brainstorming/ ideas notecard as well. 
- 
-We plan to check and update Trello frequently to stay informed about the details of our team member's progress and to ascertain where we will need to focus more as a team and as individuals. 
+<Project Tracking Software link (Trello is most common)>
 
 
 # TODO: 
