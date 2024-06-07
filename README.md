@@ -15,7 +15,7 @@ Team #4
 Mondays @ 7pm (1900) MST over Discord chat CSPB 3308 TEAM 4 Collaboration.
 
 #### Vision Statement
-  To take raw ingredients as input and provide recipes that will use those desired ingredents. 
+  To take raw ingredients as input and provide recipes that will use those desired ingredents. Utilizing an API to gather these recicpes will allow us to create algortihms to help select desired recipes and present them to the user. 
 
 #### Motivation 
   To help find recipes that use specific ingredients. 
