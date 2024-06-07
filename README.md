@@ -40,7 +40,9 @@ We are going to choose a kanban development method. This agile approach will wor
 #### Project Tracking
 Link to Trello: https://trello.com/b/UmIWjXL6/software-development-methods-and-tools-project-team-4
 
-We will track our project through Trello, which is effectively a tool based on Kanban principles. We plan to have a product backlog, sprint backlog, and burndown chart in Trello, each on a separate notecard. We will also have personal notecards to list our tasks for the sprints and our progress on those tasks. We will likely keep a general brainstorming/ ideas notecard as well. 
+We will track our project through Trello, which is effectively a tool based on Kanban principles. We plan to have a product backlog/ list of ideas and tasks that need to be worked on, each on a separate notecard. This will help us visualize/ read our tasks and to optimize the flow of work.
+
+We will also have personal notecards to list our tasks and our progress on those tasks. We will likely keep a general brainstorming/ ideas notecard as well. 
  
 We plan to check and update Trello frequently to stay informed about the details of our team member's progress and to ascertain where we will need to focus more as a team and as individuals. 
 
