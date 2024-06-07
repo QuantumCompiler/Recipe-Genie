@@ -8,7 +8,6 @@ Team #4
 ### Team members: 
 - Weston Brach
 - Jasmine Duran
-- Yan Gu
 - Tyler Hopkins
 - Taylor Larrechea
 
