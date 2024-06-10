@@ -1,6 +1,4 @@
-# Project Title
-
-## Product Name
+## Recipe Genie
 
 ### Team
 Team #4
@@ -60,6 +58,4 @@ We will also have personal note cards to list our tasks and our progress on thos
  
 We plan to check and update Trello frequently to stay informed about the details of our team member's progress and to ascertain where we will need to focus more as a team and as individuals. 
 
-
 # TODO: 
-[Make sure to add access for the instructor(s)]
