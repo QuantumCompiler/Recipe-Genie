@@ -26,7 +26,6 @@ export default function CreateRecipe() {
     const [inputs, setInputs] = useState([{ value: '' }]);
     const [focusedIndex, setFocusedIndex] = useState(null);
     const [deleteIndex, setDeleteIndex] = useState(null);
-
     /*  addInput - A function to add a new input to the inputs array
         Inputs:
             None
@@ -38,7 +37,6 @@ export default function CreateRecipe() {
     const addInput = () => {
         setInputs([...inputs, { value: '' }]);
     };
-
     /*  deleteInput - A function to delete an input from the inputs array
         Inputs:
             index: The index of the input to be deleted
@@ -54,7 +52,6 @@ export default function CreateRecipe() {
             setInputs(inputs.filter((_, i) => i !== index));
         }
     }, [inputs]);
-
     /*  deleteAllInputs - A function to delete all inputs from the inputs array
         Inputs:
             None
@@ -66,7 +63,6 @@ export default function CreateRecipe() {
     const deleteAllInputs = () => {
         setInputs([{ value: '' }]);
     };
-
     /*  inputChange - A function to update the value of an input in the inputs array
         Inputs:
             index: The index of the input to be updated
@@ -85,7 +81,6 @@ export default function CreateRecipe() {
         });
         setInputs(newInputs);
     };
-
     /*  submit - A function to handle the form submission
         Inputs:
             event: The event object containing the form data
@@ -99,7 +94,6 @@ export default function CreateRecipe() {
         event.preventDefault();
         console.log('Inputs:', inputs);
     };
-
     /*  useEffect hook:
             * This hook is used to delete an input when the deleteIndex state is updated
     */
@@ -109,7 +103,6 @@ export default function CreateRecipe() {
             setDeleteIndex(null);
         }
     }, [deleteIndex, deleteInput]);
-
     /*  JSX:
             * This JSX code renders a form with a list of input fields
             * Each input field has a label and a text field
