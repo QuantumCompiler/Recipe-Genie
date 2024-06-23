@@ -3,6 +3,17 @@ import React, { useState, useEffect, useCallback } from 'react';
 import DeleteIcon from '@mui/icons-material/Delete';
 import AddCircle from '@mui/icons-material/AddCircle';
 
+/*  CreateRecipe - A functional component to create a new recipe
+    Inputs:
+        None
+    Algorithm:
+        * Create a form with a list of input fields
+        * Add a new input field when the user clicks the "Add" button
+        * Delete an input field when the user clicks the delete icon
+        * Submit the form to log the current state of the inputs array
+    Return:
+        A form to create a new recipe with input fields for ingredients
+*/
 export default function CreateRecipe() {
     /*  useState hooks: 
             inputs: An array of objects, each containing a value property
