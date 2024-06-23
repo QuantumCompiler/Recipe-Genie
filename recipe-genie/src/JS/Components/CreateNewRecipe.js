@@ -104,11 +104,6 @@ export default function CreateRecipe() {
         }
     }, [deleteIndex, deleteInput]);
     /*  JSX:
-            * This JSX code renders a form with a list of input fields
-            * Each input field has a label and a text field
-            * The user can add new input fields by clicking the "Add" button
-            * The user can delete an input field by clicking the delete icon
-            * The user can submit the form to log the current state of the
     */
     return (
         // Container for current screen
