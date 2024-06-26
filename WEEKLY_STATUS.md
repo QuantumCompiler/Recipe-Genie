@@ -43,3 +43,15 @@
   - Find a way to link database to recipe-genie
    - Cultivate a solid understanding of what is requried of this database
    - Implement requirements
+
+
+## Weston Brach:
+- Completed:
+        - Found API for the team to use for food nutritional data. 
+        - Read through Spoonacular docs to get up to speed on working with Tyler on that part. 
+- In Progress:
+        - Help create a method for the API:
+                - Help Create Unit Tests
+                - Help Mold to Flask needs for input and output
+                - Store test output from API to limit calls
+               
