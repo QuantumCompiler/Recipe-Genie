@@ -34,3 +34,12 @@
   - Create method to hand off contents from ingredients fields.
   - Feed the aforementioned strings from the ingredients fields into the API.
   - Display the results of the output from the API call to the screen.
+
+
+ ## Jasmine Duran:
+- Completed:
+  - Narrowed down to two possible databases, did research on react and APIs.
+- In Progress:
+  - Find a way to link database to recipe-genie
+   - Cultivate a solid understanding of what is requried of this database
+   - Implement requirements
