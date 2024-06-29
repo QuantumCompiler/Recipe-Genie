@@ -81,6 +81,52 @@ export default function CreateRecipe() {
         });
         setInputs(newInputs);
     };
+    /*  getRecipesByIngredients - A function to get recipes by ingredients with spoonacular API
+        Inputs:
+            ingredients: A string of ingredients separated by commas
+            number: The number of recipes to return (default: 10)
+            ranking: The ranking of the recipes (default: 1)
+            ignorePantry: A boolean to ignore pantry ingredients (default: false)
+        Algorithm:
+            * Create a query object with the specified parameters
+                * ingredients: The list of ingredients
+                * number: The number of recipes to return
+                * ranking: The ranking of the recipes
+                * ignorePantry: A boolean to ignore pantry ingredients
+            * Create a URL object with the spoonacular API endpoint
+            * Add the query parameters to the URL
+            * Create a headers object with the API key and host
+                * x-rapidapi-key - 0969f52154mshf5d39e0b2d8cbf0p1af05bjsn7ac99719ef08
+                * x-rapidapi-host - spoonacular-recipe-food-nutrition-v1.p.rapidapi.com
+            * Fetch the data from the API using the URL and headers
+                * Response is converted to JSON
+                * Data is stored in local storage
+                * Data is logged to the console
+                * Error is logged to the console (if applicable)
+        Return:
+            Logs the data from the spoonacular API to the console
+    */
+    function getRecipesByIngredients(ingredients, number = 10, ranking = 1, ignorePantry = false) {
+        const query = {
+            ingredients: ingredients,
+            number: number,
+            ranking: ranking,
+            ignorePantry: ignorePantry
+        };
+        const url = new URL("https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/findByIngredients");
+        url.search = new URLSearchParams(query).toString();
+        const headers = {
+            "x-rapidapi-key": "0969f52154mshf5d39e0b2d8cbf0p1af05bjsn7ac99719ef08",
+            "x-rapidapi-host": "spoonacular-recipe-food-nutrition-v1.p.rapidapi.com"
+        };
+    
+        fetch(url, { headers: headers })
+        .then(response => response.json())
+        .then(data => {
+            localStorage.setItem('NewRecipe', JSON.stringify(data));
+            console.log(data);
+        }).catch(error => console.error('Error:', error));
+    }
     /*  submit - A function to handle the form submission
         Inputs:
             event: The event object containing the form data
@@ -93,8 +139,49 @@ export default function CreateRecipe() {
     const submit = (event) => {
         event.preventDefault();
         var ingredients = '';
-        console.log('Inputs:', inputs);
+        for (let i = 0; i < inputs.length; i++) {
+            if (i < inputs.length - 1) {
+                ingredients += inputs[i].value + ',';
+            }
+            else {
+                ingredients += inputs[i].value;
+            }
+        }
+        // getRecipesByIngredients(ingredients, 1, 1, true);
     };
+    function retrieveNewestRecipe() {
+        const recipe = localStorage.getItem('One')
+        const recipeJSON = JSON.parse(recipe);
+        const title = recipeJSON[0].title;
+        const id = recipeJSON[0].id;
+        const test = recipeJSON[0].usedIngredients[0].id;
+        console.log(test);
+    }
+    function downloadRecipe() {
+        // Retrieve the item from local storage
+        const recipeData = localStorage.getItem('One');
+        if (!recipeData) {
+            console.error('No recipe found in local storage.');
+            return;
+        }
+    
+        // Convert the data into a Blob
+        const blob = new Blob([recipeData], { type: 'application/json' });
+    
+        // Create a URL for the Blob
+        const url = URL.createObjectURL(blob);
+    
+        // Create a temporary anchor (`<a>`) element and trigger the download
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'NewRecipe.json'; // Specify the file name for download
+        document.body.appendChild(a); // Append the anchor to the body
+        a.click(); // Simulate a click on the anchor to trigger the download
+    
+        // Clean up by revoking the Blob URL and removing the temporary anchor
+        URL.revokeObjectURL(url);
+        document.body.removeChild(a);
+    }
     /*  useEffect hook:
             * This hook is used to delete an input when the deleteIndex state is updated
     */
@@ -207,6 +294,29 @@ export default function CreateRecipe() {
                         onClick={deleteAllInputs}
                     >
                         Clear
+                    </Button>
+                </Box>
+                <Box
+                    sx={{
+                        display: 'flex',
+                        justifyContent: 'center',
+                        gap: 2,
+                        mt: 2,
+                    }}
+                >
+                    <Button
+                        color='secondary'
+                        variant='contained'
+                        onClick={retrieveNewestRecipe}
+                    >
+                        Debug
+                    </Button>
+                    <Button
+                        color='secondary'
+                        variant='contained'
+                        onClick={downloadRecipe}
+                    >
+                        Download
                     </Button>
                 </Box>
             </Box>
