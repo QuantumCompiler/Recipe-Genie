@@ -92,6 +92,7 @@ export default function CreateRecipe() {
     */
     const submit = (event) => {
         event.preventDefault();
+        var ingredients = '';
         console.log('Inputs:', inputs);
     };
     /*  useEffect hook:
