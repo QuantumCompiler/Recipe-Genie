@@ -1,62 +1,26 @@
-import { Box, Button, Typography, FormControl, TextField, IconButton } from '@mui/material';
+import { Box, Button, Card, CardMedia, CardContent, CardActions, Grid, Typography, FormControl, TextField, IconButton } from '@mui/material';
 import React, { useState, useEffect, useCallback } from 'react';
 import DeleteIcon from '@mui/icons-material/Delete';
 import AddCircle from '@mui/icons-material/AddCircle';
 
-// {
-//     "id": 514472,
-//     "title": "Almost Too Easy Honey Mustard Salmon",
-//     "image": "https://img.spoonacular.com/recipes/514472-312x231.jpg",
-//     "imageType": "jpg",
-//     "usedIngredientCount": 2,
-//     "missedIngredientCount": 1,
-//     "missedIngredients": [
-//       {
-//         "id": 1022024,
-//         "amount": 2,
-//         "unit": "tbsp",
-//         "unitLong": "tablespoons",
-//         "unitShort": "Tbsp",
-//         "aisle": "Spices and Seasonings",
-//         "name": "brown mustard",
-//         "original": "2 tbsp. brown mustard",
-//         "originalName": "brown mustard",
-//         "meta": [],
-//         "image": "https://img.spoonacular.com/ingredients_100x100/mustard-seeds.png"
-//       }
-//     ],
-//     "usedIngredients": [
-//       {
-//         "id": 19296,
-//         "amount": 2,
-//         "unit": "tbsp",
-//         "unitLong": "tablespoons",
-//         "unitShort": "Tbsp",
-//         "aisle": "Nut butters, Jams, and Honey",
-//         "name": "honey",
-//         "original": "2 tbsp. honey",
-//         "originalName": "honey",
-//         "meta": [],
-//         "image": "https://img.spoonacular.com/ingredients_100x100/honey.png"
-//       },
-//       {
-//         "id": 10115076,
-//         "amount": 4,
-//         "unit": "fillet",
-//         "unitLong": "fillets",
-//         "unitShort": "fillet",
-//         "aisle": "Seafood",
-//         "name": "salmon",
-//         "original": "4 salmon fillets",
-//         "originalName": "salmon fillets",
-//         "meta": [],
-//         "image": "https://img.spoonacular.com/ingredients_100x100/salmon.png"
-//       }
-//     ],
-//     "unusedIngredients": [],
-//     "likes": 51
-//   },
-
+/*  Ingredient - A class to store ingredient information
+    Inputs:
+        ingredient: An object containing the ingredient information
+    Properties:
+        ID: The ID of the ingredient
+        Amount: The amount of the ingredient
+        Unit: The unit of the ingredient
+        UnitLong: The long unit of the ingredient
+        UnitShort: The short unit of the ingredient
+        Aisle: The aisle of the ingredient
+        Name: The name of the ingredient
+        Original: The original ingredient string
+        OriginalName: The original name of the ingredient
+        Meta: The meta information of the ingredient
+        Image: The URL of the ingredient image
+    Methods:
+        None
+*/
 class Ingredient {
     constructor(ingredient) {
         this.ID = ingredient.id;
@@ -73,6 +37,24 @@ class Ingredient {
     }
 }
 
+/*  Recipe - A class to store recipe information
+    Inputs:
+        recipeInfo: An object containing the recipe information
+    Properties:
+        ID: The ID of the recipe
+        Title: The title of the recipe
+        Image: The URL of the recipe image
+        ImageType: The type of image
+        UsedIngredientCount: The number of used ingredients
+        MissedIngredientCount: The number of missing ingredients
+        MissedIngredients: An array of missing ingredients
+        UsedIngredients: An array of used ingredients
+        UnusedIngredients: An array of unused ingredients
+        Likes: The number of likes for the recipe
+    Methods:
+        ShowUsedIngredientsNames: A function to display the names of the used ingredients
+        ShowMissingIngredientsNames: A function to display the names of the missing ingredients
+*/
 class Recipe {
     constructor(recipeInfo) {
         this.ID = recipeInfo.id;
@@ -94,6 +76,175 @@ class Recipe {
             this.UnusedIngredients.push(new Ingredient(recipeInfo.unusedIngredients[i]));
         }
         this.Likes = recipeInfo.likes;
+    }
+
+    /*  ShowUsedIngredientsNames - A function to display the names of the used ingredients
+        Inputs:
+            None
+        Algorithm:
+            * Create a string to store the names of the used ingredients
+            * Loop over the used ingredients and append the names to the string
+            * Return the string
+        Return:
+            A string containing the names of the used ingredients
+    */
+    ShowUsedIngredientsNames() {
+        var used = '';
+        for (let i = 0; i < this.UsedIngredientCount; i++) {
+            if (i < this.UsedIngredientCount - 1) {
+                used += this.UsedIngredients[i].Name + ", ";
+            }
+            else {
+                used += this.UsedIngredients[i].Name + ".";
+            }
+        }
+        return used;
+    }
+
+    /*  ShowMissingIngredientsNames - A function to display the names of the missing ingredients
+        Inputs:
+            None
+        Algorithm:
+            * Create a string to store the names of the missing ingredients
+            * Loop over the missed ingredients and append the names to the string
+            * Return the string
+        Return:
+            A string containing the names of the missing ingredients
+    */
+    ShowMissingIngredientsNames() {
+        var missing = '';
+        for (let i = 0; i < this.MissedIngredientCount; i++) {
+            if (i < this.MissedIngredientCount - 1) {
+                missing += this.MissedIngredients[i].Name + ", ";
+            }
+            else {
+                missing += this.MissedIngredients[i].Name + ".";
+            }
+        }
+        return missing;
+    }
+}
+
+/*  RecipeCards - A class component to display recipe cards
+    Inputs:
+        None
+    Algorithm:
+        * Retrieve the most recent recipe data from local storage
+        * Call the convertAPIResults function to convert the data to Recipe objects
+        * Render a card for each Recipe object
+    Return:
+        A list of cards containing the recipe information
+*/
+class RecipeCards extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            recipes: []
+        };
+    }
+    /*  convertAPIResults - A function to convert the results from the spoonacular API to Recipe objects
+        Inputs:
+            None
+        Algorithm:
+            * Retrieve the recipe data from local storage
+            * Convert the data to JSON
+            * Create an array of Recipe objects from the JSON data
+        Return:
+            An array of Recipe objects
+    */
+    convertAPIResults() {
+        // Retrieve Recipe
+        const stored = localStorage.getItem('NewRecipe');
+        // Convert To JSON
+        const storedJSON = JSON.parse(stored);
+        // Create Recipes Array And Append
+        const recipes = [];
+        for (let i = 0; i < storedJSON.length; i++) {
+            recipes.push(new Recipe(storedJSON[i]));
+        }
+        return recipes;
+    }
+
+    /*  componentDidMount - A lifecycle method that runs after the component has mounted
+        Inputs:
+            None
+        Algorithm:
+            * Set the state of the component to contain the converted API results
+        Return:
+            Updates the state of the component with the converted API results
+    */
+    componentDidMount() {
+        this.setState({
+            recipes: this.convertAPIResults()
+        });
+    }
+
+    /*  render - A function to render the component
+        Inputs:
+            None
+        Algorithm:
+            * Map over the recipes array and render a card for each Recipe object
+        Return:
+            A list of cards containing the recipe information
+    */
+    render() {
+        return (
+            <div>
+                {this.state.recipes.map((recipe, index) => (
+                    <Card key={index} 
+                        sx={{ 
+                            margin: 2,
+                            width: `${window.innerWidth / 2}px`,
+                        }}
+                    >
+                        {/* Title Of Recipe */}
+                        <CardContent>
+                            <Typography
+                                gutterBottom variant="h5" 
+                                component="div"
+                                align='center'
+                            >
+                                {recipe.Title} - {recipe.Likes} Likes
+                            </Typography>
+                        </CardContent>
+                        {/* Image Of Recipe */}
+                        <div
+                            style={{display: 'flex', justifyContent: 'center', alignItems: 'center'}}
+                        >
+                            <CardMedia
+                                component="img"
+                                style={{height: '200px', width: '500px', objectFit: 'contain'}}
+                                image={recipe.Image}
+                                alt={recipe.Title}
+                            />
+                        </div>
+                        {/* Content Of Recipe */}
+                        <CardContent>
+                            {/* Used Ingredients (Ingredients You Already Have) */}
+                            <Typography
+                                gutterBottom variant='p'
+                                component="div"
+                            >
+                                Ingredients You Already Have: {recipe.UsedIngredientCount} - {' '}
+                                <span style={{ color: 'blue'}}>
+                                    {recipe.ShowUsedIngredientsNames()}
+                                </span>
+                            </Typography>
+                            {/* Missing Ingredients (Ingredients You Are Missing) */}
+                            <Typography
+                                gutterBottom variant='p'
+                                component='div'
+                            >
+                                Ingredients You Are Missing: {recipe.MissedIngredientCount} - {' '}
+                                <span style={{ color: 'red'}}>
+                                    {recipe.ShowMissingIngredientsNames()}
+                                </span>
+                            </Typography>
+                        </CardContent>
+                    </Card>
+                ))}
+            </div>
+        );
     }
 }
 
@@ -120,6 +271,7 @@ export default function CreateRecipe() {
     const [inputs, setInputs] = useState([{ value: '' }]);
     const [focusedIndex, setFocusedIndex] = useState(null);
     const [deleteIndex, setDeleteIndex] = useState(null);
+    const [showCards, setShowCards] = useState(false);
 
     /*  addInput - A function to add a new input to the inputs array
         Inputs:
@@ -132,6 +284,10 @@ export default function CreateRecipe() {
     function addInput() {
         setInputs([...inputs, { value: '' }]);
     };
+
+    function toggleCards() {
+        setShowCards(!showCards);
+    }
 
     /*  deleteInput - A function to delete an input from the inputs array
         Inputs:
@@ -162,6 +318,7 @@ export default function CreateRecipe() {
     */
     function deleteAllInputs() {
         setInputs([{ value: ''}]);
+        setShowCards(false);
     }
 
     /*  inputChange - A function to update the value of an input in the inputs array
@@ -243,7 +400,8 @@ export default function CreateRecipe() {
         Return:
             Logs the current state of the inputs array
     */
-    function submit(event) {
+    async function submit(event) {
+        localStorage.clear();
         event.preventDefault();
         var ingredients = '';
         for (let i = 0; i < inputs.length; i++) {
@@ -254,46 +412,8 @@ export default function CreateRecipe() {
                 ingredients += inputs[i].value;
             }
         }
-        getRecipesByIngredients(ingredients, 10, 1, true);
-    }
-
-    function convertAPIResults() {
-        // Retrieve Recipe
-        const stored = localStorage.getItem('NewRecipe');
-        // Convert To JSON
-        const storedJSON = JSON.parse(stored);
-        // Create Recipes Array And Append
-        const recipes = [];
-        for (let i = 0; i < storedJSON.length; i++) {
-            recipes.push(new Recipe(storedJSON[i]));
-        }
-        return recipes;
-    }
-
-    function downloadRecipe() {
-        // Retrieve the item from local storage
-        const recipeData = localStorage.getItem('NewRecipe');
-        if (!recipeData) {
-            console.error('No recipe found in local storage.');
-            return;
-        }
-    
-        // Convert the data into a Blob
-        const blob = new Blob([recipeData], { type: 'application/json' });
-    
-        // Create a URL for the Blob
-        const url = URL.createObjectURL(blob);
-    
-        // Create a temporary anchor (`<a>`) element and trigger the download
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = 'NewRecipe.json'; // Specify the file name for download
-        document.body.appendChild(a); // Append the anchor to the body
-        a.click(); // Simulate a click on the anchor to trigger the download
-    
-        // Clean up by revoking the Blob URL and removing the temporary anchor
-        URL.revokeObjectURL(url);
-        document.body.removeChild(a);
+        await getRecipesByIngredients(ingredients, 10, 1, true);
+        toggleCards();
     }
 
     /*  useEffect hook:
@@ -310,13 +430,15 @@ export default function CreateRecipe() {
     */
     return (
         // Container for current screen
-        <Box
+        <Grid
             sx={{
                 display: 'flex',
+                flexDirection: 'column',
                 justifyContent: 'center',
                 backgroundColor: '#f0f0f0',
-                paddingTop: '20px',
-                paddingBottom: '20px',
+                alignItems: 'center',
+                pt: 5,
+                pb: 5,
             }}
         >
             {/* The Box component is used to create a container for the form */}
@@ -324,7 +446,7 @@ export default function CreateRecipe() {
                 component="form"
                 onSubmit={submit}
                 sx={{
-                    width: '50%',
+                    width: `${window.innerWidth / 2}px`,
                     bgcolor: 'white',
                     p: 3,
                     borderRadius: 1,
@@ -411,30 +533,9 @@ export default function CreateRecipe() {
                         Clear
                     </Button>
                 </Box>
-                <Box
-                    sx={{
-                        display: 'flex',
-                        justifyContent: 'center',
-                        gap: 2,
-                        mt: 2,
-                    }}
-                >
-                    <Button
-                        color='secondary'
-                        variant='contained'
-                        onClick={convertAPIResults}
-                    >
-                        Debug
-                    </Button>
-                    <Button
-                        color='secondary'
-                        variant='contained'
-                        onClick={downloadRecipe}
-                    >
-                        Download
-                    </Button>
-                </Box>
             </Box>
-        </Box>
+            {/* Recipe Cards */}
+            {showCards && <RecipeCards />}
+        </Grid>
     );
 }
