@@ -3,6 +3,100 @@ import React, { useState, useEffect, useCallback } from 'react';
 import DeleteIcon from '@mui/icons-material/Delete';
 import AddCircle from '@mui/icons-material/AddCircle';
 
+// {
+//     "id": 514472,
+//     "title": "Almost Too Easy Honey Mustard Salmon",
+//     "image": "https://img.spoonacular.com/recipes/514472-312x231.jpg",
+//     "imageType": "jpg",
+//     "usedIngredientCount": 2,
+//     "missedIngredientCount": 1,
+//     "missedIngredients": [
+//       {
+//         "id": 1022024,
+//         "amount": 2,
+//         "unit": "tbsp",
+//         "unitLong": "tablespoons",
+//         "unitShort": "Tbsp",
+//         "aisle": "Spices and Seasonings",
+//         "name": "brown mustard",
+//         "original": "2 tbsp. brown mustard",
+//         "originalName": "brown mustard",
+//         "meta": [],
+//         "image": "https://img.spoonacular.com/ingredients_100x100/mustard-seeds.png"
+//       }
+//     ],
+//     "usedIngredients": [
+//       {
+//         "id": 19296,
+//         "amount": 2,
+//         "unit": "tbsp",
+//         "unitLong": "tablespoons",
+//         "unitShort": "Tbsp",
+//         "aisle": "Nut butters, Jams, and Honey",
+//         "name": "honey",
+//         "original": "2 tbsp. honey",
+//         "originalName": "honey",
+//         "meta": [],
+//         "image": "https://img.spoonacular.com/ingredients_100x100/honey.png"
+//       },
+//       {
+//         "id": 10115076,
+//         "amount": 4,
+//         "unit": "fillet",
+//         "unitLong": "fillets",
+//         "unitShort": "fillet",
+//         "aisle": "Seafood",
+//         "name": "salmon",
+//         "original": "4 salmon fillets",
+//         "originalName": "salmon fillets",
+//         "meta": [],
+//         "image": "https://img.spoonacular.com/ingredients_100x100/salmon.png"
+//       }
+//     ],
+//     "unusedIngredients": [],
+//     "likes": 51
+//   },
+
+class Ingredient {
+    constructor(ingredient) {
+        this.ID = ingredient.id;
+        this.Amount = ingredient.amount;
+        this.Unit = ingredient.unit;
+        this.UnitLong = ingredient.unitLong;
+        this.UnitShort = ingredient.unitShort;
+        this.Aisle = ingredient.aisle;
+        this.Name = ingredient.name;
+        this.Original = ingredient.original;
+        this.OriginalName = ingredient.originalName;
+        this.Meta = ingredient.meta;
+        this.Image = ingredient.image;
+    }
+}
+
+class Recipe {
+    constructor(recipeInfo) {
+        this.ID = recipeInfo.id;
+        this.Title = recipeInfo.title;
+        this.Image = recipeInfo.image;
+        this.ImageType = recipeInfo.imageType;
+        this.UsedIngredientCount = recipeInfo.usedIngredientCount;
+        this.MissedIngredientCount = recipeInfo.missedIngredientCount;
+        this.MissedIngredients = [];
+        for (let i = 0; i < this.MissedIngredientCount; i++) {
+            this.MissedIngredients.push(new Ingredient(recipeInfo.missedIngredients[i]));
+        }
+        this.UsedIngredients = [];
+        for (let i = 0; i < this.UsedIngredientCount; i++) {
+            this.UsedIngredients.push(new Ingredient(recipeInfo.usedIngredients[i]));
+        }
+        this.UnusedIngredients = [];
+        for (let i = 0; i < this.UnusedIngredients.length; i++) {
+            this.UnusedIngredients.push(new Ingredient(recipeInfo.unusedIngredients[i]));
+        }
+        this.Likes = recipeInfo.likes;
+    }
+}
+
 /*  CreateRecipe - A functional component to create a new recipe
     Inputs:
         None
@@ -26,6 +120,7 @@ export default function CreateRecipe() {
     const [inputs, setInputs] = useState([{ value: '' }]);
     const [focusedIndex, setFocusedIndex] = useState(null);
     const [deleteIndex, setDeleteIndex] = useState(null);
+
     /*  addInput - A function to add a new input to the inputs array
         Inputs:
             None
@@ -34,9 +129,10 @@ export default function CreateRecipe() {
         Return:
             Adds a new input to the inputs array
     */
-    const addInput = () => {
+    function addInput() {
         setInputs([...inputs, { value: '' }]);
     };
+
     /*  deleteInput - A function to delete an input from the inputs array
         Inputs:
             index: The index of the input to be deleted
@@ -47,11 +143,15 @@ export default function CreateRecipe() {
         Return:
             Updates the inputs array to remove the specified
     */
-    const deleteInput = useCallback((index) => {
+    function deleteInput(index) {
         if (inputs.length > 1) {
-            setInputs(inputs.filter((_, i) => i !== index));
+            setInputs(currentInputs => currentInputs.filter((_, i) => i !== index));
         }
-    }, [inputs]);
+        else if (inputs.length == 1) {
+            setInputs([{value: ''}]);
+        }
+    }
+
     /*  deleteAllInputs - A function to delete all inputs from the inputs array
         Inputs:
             None
@@ -60,9 +160,10 @@ export default function CreateRecipe() {
         Return:
             Updates the inputs array to contain a single input with an empty value
     */
-    const deleteAllInputs = () => {
-        setInputs([{ value: '' }]);
-    };
+    function deleteAllInputs() {
+        setInputs([{ value: ''}]);
+    }
+
     /*  inputChange - A function to update the value of an input in the inputs array
         Inputs:
             index: The index of the input to be updated
@@ -72,15 +173,16 @@ export default function CreateRecipe() {
         Return:
             Updates the value of the input at the specified index
     */
-    const inputsChange = (index, event) => {
-        const newInputs = inputs.map((input, i) => {
+    function inputsChange(index, event) {
+        var newInputs = inputs.map(function(input, i) {
             if (i === index) {
                 return { value: event.target.value };
             }
             return input;
         });
         setInputs(newInputs);
-    };
+    }
+
     /*  getRecipesByIngredients - A function to get recipes by ingredients with spoonacular API
         Inputs:
             ingredients: A string of ingredients separated by commas
@@ -106,7 +208,7 @@ export default function CreateRecipe() {
         Return:
             Logs the data from the spoonacular API to the console
     */
-    function getRecipesByIngredients(ingredients, number = 10, ranking = 1, ignorePantry = false) {
+    async function getRecipesByIngredients(ingredients, number = 10, ranking = 1, ignorePantry = false) {
         const query = {
             ingredients: ingredients,
             number: number,
@@ -119,14 +221,19 @@ export default function CreateRecipe() {
             "x-rapidapi-key": "0969f52154mshf5d39e0b2d8cbf0p1af05bjsn7ac99719ef08",
             "x-rapidapi-host": "spoonacular-recipe-food-nutrition-v1.p.rapidapi.com"
         };
-    
-        fetch(url, { headers: headers })
-        .then(response => response.json())
-        .then(data => {
+        try {
+            const response = await fetch(url, { headers: headers });
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            const data = await response.json();
             localStorage.setItem('NewRecipe', JSON.stringify(data));
             console.log(data);
-        }).catch(error => console.error('Error:', error));
+        } catch (error) {
+            console.error('Error:', error);
+        }
     }
+
     /*  submit - A function to handle the form submission
         Inputs:
             event: The event object containing the form data
@@ -136,7 +243,7 @@ export default function CreateRecipe() {
         Return:
             Logs the current state of the inputs array
     */
-    const submit = (event) => {
+    function submit(event) {
         event.preventDefault();
         var ingredients = '';
         for (let i = 0; i < inputs.length; i++) {
@@ -147,19 +254,25 @@ export default function CreateRecipe() {
                 ingredients += inputs[i].value;
             }
         }
-        // getRecipesByIngredients(ingredients, 1, 1, true);
-    };
-    function retrieveNewestRecipe() {
-        const recipe = localStorage.getItem('One')
-        const recipeJSON = JSON.parse(recipe);
-        const title = recipeJSON[0].title;
-        const id = recipeJSON[0].id;
-        const test = recipeJSON[0].usedIngredients[0].id;
-        console.log(test);
+        getRecipesByIngredients(ingredients, 10, 1, true);
     }
+
+    function convertAPIResults() {
+        // Retrieve Recipe
+        const stored = localStorage.getItem('NewRecipe');
+        // Convert To JSON
+        const storedJSON = JSON.parse(stored);
+        // Create Recipes Array And Append
+        const recipes = [];
+        for (let i = 0; i < storedJSON.length; i++) {
+            recipes.push(new Recipe(storedJSON[i]));
+        }
+        return recipes;
+    }
+
     function downloadRecipe() {
         // Retrieve the item from local storage
-        const recipeData = localStorage.getItem('One');
+        const recipeData = localStorage.getItem('NewRecipe');
         if (!recipeData) {
             console.error('No recipe found in local storage.');
             return;
@@ -182,6 +295,7 @@ export default function CreateRecipe() {
         URL.revokeObjectURL(url);
         document.body.removeChild(a);
     }
+
     /*  useEffect hook:
             * This hook is used to delete an input when the deleteIndex state is updated
     */
@@ -191,6 +305,7 @@ export default function CreateRecipe() {
             setDeleteIndex(null);
         }
     }, [deleteIndex, deleteInput]);
+
     /*  JSX:
     */
     return (
@@ -307,7 +422,7 @@ export default function CreateRecipe() {
                     <Button
                         color='secondary'
                         variant='contained'
-                        onClick={retrieveNewestRecipe}
+                        onClick={convertAPIResults}
                     >
                         Debug
                     </Button>
