@@ -25,7 +25,7 @@ export default function App() {
           {/* Route for the home page */}
           <Route path='/' exact element={Dashboard} />
           {/* Route for the create recipe page */}
-          <Route path='create-recipe' element={<CreateRecipe />}/>
+          <Route path='/create-recipe' element={<CreateRecipe />}/>
         </Routes>
       </div>
     </Router>
