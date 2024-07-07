@@ -15,7 +15,6 @@
                 - Mold to Flask needs for input and output
                 - Store test output from API to limit calls
 
-
 ## Taylor Larrechea:
 - Completed:
   - Created basic GUI for application.
@@ -54,4 +53,29 @@
                 - Help Create Unit Tests
                 - Help Mold to Flask needs for input and output
                 - Store test output from API to limit calls
-               
+
+# Week 7 Progress:
+
+## Current Trello Board
+
+<p align="center">
+  <img src="Status Update Images/Trello Board - Week 7.png" width="1500">
+</p>
+
+## Taylor Larrechea:
+- Completed:
+  - Created the NodeJS server that will store the database for the project
+    <p align="center">
+      <img src="Status Update Images/NodeJS Server Screen - Week 7.png" width="1000">
+    </p>
+  - Built classes for recipes and ingredients that are going to be fed to the API call
+  - Built a test method to call the API from the frontend
+  - Built a component in react to display the results of the API call
+    <p align="center">
+      <img src="Status Update Images/Create New Recipe Screen - Week 7.png" width="1000">
+    </p>
+- In Progress:
+  - Put more information on the frontend for API calls
+  - Design three other pages for the application
+  - Find a way to communicate with the backend of the application with the frontend
+  - Help backend team store results from the API call to the database
