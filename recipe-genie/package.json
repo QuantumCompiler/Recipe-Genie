@@ -1,6 +1,6 @@
 {
   "name": "recipe-genie",
-  "version": "0.1.0",
+  "version": "1.0",
   "private": true,
   "dependencies": {
     "@emotion/react": "^11.11.4",
@@ -12,6 +12,8 @@
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
+    "cors": "^2.8.5",
+    "express": "^4.19.2",
     "node-fetch": "^3.3.2",
     "process": "^0.11.10",
     "react": "^18.3.1",
@@ -50,5 +52,8 @@
   "devDependencies": {
     "concurrently": "^8.2.2",
     "nodemon": "^3.1.4"
-  }
+  },
+  "proxy": "http://localhost:3308",
+  "main": "index.js",
+  "license": "MIT"
 }
