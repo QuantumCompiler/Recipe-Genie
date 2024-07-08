@@ -79,3 +79,13 @@
   - Design three other pages for the application
   - Find a way to communicate with the backend of the application with the frontend
   - Help backend team store results from the API call to the database
+
+  ## Weston Brach:
+- Completed:
+  - Read through Spoonacular API
+  - Read through various guides on running react and Node.js
+
+- In Progress:
+  - continue learning javascript 
+  - Figure out how to use SQL in Javascript
+  - Define custom method in javascript and figure out interaction with the database  
