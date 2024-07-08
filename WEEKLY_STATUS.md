@@ -3,7 +3,7 @@
 ## Current Trello Board
 
 <p align="center">
-  <img src="Status Update Images/Trello Board - Week 7.png" width="1500">
+  <img src="Status Update Images/Trello Board - Week 6.png" width="1500">
 </p>
 
 ## Tyler Hopkins:
@@ -40,9 +40,13 @@
   - Narrowed down to two possible databases, did research on react and APIs.
   - Initlize database in recipe-genie
 - In Progress:
+  - Find a way to link database to recipe-genie
+   - Cultivate a solid understanding of what is requried of this database
+   - Implement requirements
    - create table for database
    - test run app on own device
    - about page
+   - 
 
 
 ## Weston Brach:
@@ -99,4 +103,16 @@
 - In Progress:
   - continue learning javascript 
   - Figure out how to use SQL in Javascript
-  - Define custom method in javascript and figure out interaction with the database  
+  - Define custom method in javascript and figure out interaction with the database
+ 
+   ## Jasmine Duran:
+- Completed:
+  - Narrowed down to two possible databases, did research on react and APIs.
+  - Initlize database in recipe-genie
+  - install vs code
+- In Progress:
+   - Create table for database
+   - Test run app on own device
+   - About page
+   - Get react up and running on local VS code 
+
