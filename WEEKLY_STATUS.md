@@ -79,3 +79,13 @@
   - Design three other pages for the application
   - Find a way to communicate with the backend of the application with the frontend
   - Help backend team store results from the API call to the database
+
+## Tyler Hopkins:
+- Completed:
+  - Explored Java Script tutorials on Codecademy.com to learn the foundations of Java Script.
+  - Created alternative backend for Application. We didn't end up using this due to earlier implimentation from Taylor.
+  - Explored Node.JS tutorials on Codecademy.com to learn the reasoning behind Node and how to interact with it.
+  - Explored Unit testing as it applies to Node.js
+- In Progress:
+  - Create a method for the backend to communicate with the front end in a standardized format utilizing the port we have created for the server. 
+  - Add unit testing and more comments explaining how the application works around the code.
