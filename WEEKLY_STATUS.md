@@ -3,7 +3,7 @@
 ## Current Trello Board
 
 <p align="center">
-  <img src="Status Update Images/Trello Board - Week 6.png" width="1500">
+  <img src="Status Update Images/Trello Board - Week 7.png" width="1500">
 </p>
 
 ## Tyler Hopkins:
