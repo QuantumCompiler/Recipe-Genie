@@ -38,10 +38,11 @@
  ## Jasmine Duran:
 - Completed:
   - Narrowed down to two possible databases, did research on react and APIs.
+  - Initlize database in recipe-genie
 - In Progress:
-  - Find a way to link database to recipe-genie
-   - Cultivate a solid understanding of what is requried of this database
-   - Implement requirements
+   - create table for database
+   - test run app on own device
+   - about page
 
 
 ## Weston Brach:
