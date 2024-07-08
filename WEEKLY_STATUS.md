@@ -89,3 +89,13 @@
 - In Progress:
   - Create a method for the backend to communicate with the front end in a standardized format utilizing the port we have created for the server. 
   - Add unit testing and more comments explaining how the application works around the code.
+
+  ## Weston Brach:
+- Completed:
+  - Read through Spoonacular API
+  - Read through various guides on running react and Node.js
+
+- In Progress:
+  - continue learning javascript 
+  - Figure out how to use SQL in Javascript
+  - Define custom method in javascript and figure out interaction with the database  
