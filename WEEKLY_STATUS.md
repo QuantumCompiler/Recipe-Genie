@@ -97,13 +97,13 @@
 
   ## Weston Brach:
 - Completed:
-  - Read through Spoonacular API
-  - Read through various guides on running react and Node.js
+  -  continue learning javascript through codeacademy
 
 - In Progress:
-  - continue learning javascript 
   - Figure out how to use SQL in Javascript
-  - Define custom method in javascript and figure out interaction with the database
+  - help Define custom method in javascript and figure out interaction with the database
+  - help with the unit testing and comments 
+
  
    ## Jasmine Duran:
 - Completed:
@@ -116,3 +116,15 @@
    - About page
    - Get react up and running on local VS code 
 
+# Week 8 Progress: 
+
+## Weston Brach:
+- Completed:
+  -  continue learning javascript through codeacademy
+
+- In Progress:
+  - Figure out how to use SQL in Javascript
+  - help Define custom method in javascript and figure out interaction with the database
+  - help with the unit testing and comments 
+
+  
