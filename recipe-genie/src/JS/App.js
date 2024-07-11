@@ -46,5 +46,3 @@ export default function App() {
     </Router>
   );
 }
-
-// Test
