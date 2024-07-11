@@ -87,24 +87,11 @@ export default function Register() {
                                 onChange={(e) => setConfirmPassword(e.target.value)}
                             />
                         </FormControl>
-                        <Box
-                            sx={{
-                                display: 'flex',
-                                flexDirection: 'row',
-                                justifyContent: 'center',
-                                gap: 2,
-                            }}
-                        >
-                            <Link
-                                style={{
-                                    textDecoration: 'none',
-                                    color: 'blue',
-                                }}
-                                to='/'
-                            >Return To Login</Link>
-                        </Box>
-                        <Button type="submit" variant="contained" color="primary">
+                        <Button type='submit' variant='contained' color='primary'>
                             Register
+                        </Button>
+                        <Button component={Link} to='/' variant='contained' color='primary'>
+                            Return To Login
                         </Button>
                     </Box>
                 </CardContent>
