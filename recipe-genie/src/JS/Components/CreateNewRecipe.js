@@ -1,9 +1,10 @@
 import { Box, Button, Grid, Typography, FormControl, TextField, IconButton } from '@mui/material';
-import React, { useState, useEffect, useCallback} from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import DeleteIcon from '@mui/icons-material/Delete';
 import AddCircle from '@mui/icons-material/AddCircle';
 import SpoonAPI from '../Utilities/SpoonAPI.js';
 import RecipeCards from './RecipeCards.js';
+import axios from 'axios';
 
 
 /*  CreateRecipe - A functional component to create a new recipe
@@ -130,9 +131,18 @@ export default function CreateRecipe() {
         setShowCards(!showCards);
     }
 
-    /*  useEffect hook:
-            * This hook is used to delete an input when the deleteIndex state is updated
-    */
+    const sendPostRequest = async () => {
+        try {
+            const response = await axios.post('http://localhost:3308/post', {
+                data: "Hello from React"
+            });
+            console.log("The response has been created.")
+            console.log(response.data);
+        } catch (error) {
+            console.error('There was an error!', error);
+        }
+    };
+
     useEffect(() => {
         if (deleteIndex !== null) {
             DeleteInput(deleteIndex);
@@ -245,6 +255,13 @@ export default function CreateRecipe() {
                         onClick={DeleteAllInputs}
                     >
                         Clear
+                    </Button>
+                    <Button
+                        color='primary'
+                        variant='contained'
+                        onClick={sendPostRequest}
+                    >
+                        Send POST Request
                     </Button>
                 </Box>
             </Box>

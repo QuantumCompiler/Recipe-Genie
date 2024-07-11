@@ -27,3 +27,10 @@ app.listen(port, async () => {
     const open = (await import('open')).default;
     await open(`http://localhost:${port}`);
 });
+
+// Handle POST request from React
+app.post("/post", (req, res) => {
+    console.log("Connected to React");
+    console.log("Data received:", req.body);
+    res.json({ message: "Data received successfully" });
+});
