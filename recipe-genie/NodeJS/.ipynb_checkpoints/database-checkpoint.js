@@ -1,6 +1,3 @@
-//Connects the SQL database to Node.Js
-
-// Import sqlite3 module and enable verbose mode for debugging
 const sqlite3 = require('sqlite3').verbose();
 
 // Connect to the database
