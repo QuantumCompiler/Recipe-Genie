@@ -18,14 +18,13 @@ CREATE TABLE IF NOT EXISTS Sessions (
 -- Create Recipes table
 CREATE TABLE IF NOT EXISTS Recipes (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
-    spoonacular_id INTEGER NOT NULL,
-    title TEXT NOT NULL,
-    ready_in_minutes INTEGER,
-    servings INTEGER,
-    image TEXT,
-    source_url TEXT,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    user_id INTEGER NOT NULL,
+    ingredients TEXT NOT NULL,
+    result TEXT NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY(user_id) REFERENCES Users(id)
 );
+
 
 -- Create Ingredients table
 CREATE TABLE IF NOT EXISTS Ingredients (
@@ -35,6 +34,15 @@ CREATE TABLE IF NOT EXISTS Ingredients (
     amount REAL,
     unit TEXT,
     FOREIGN KEY(recipe_id) REFERENCES Recipes(id)
+);
+
+-- Create UserQueries table
+CREATE TABLE IF NOT EXISTS UserQueries (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    user_id INTEGER,
+    ingredients TEXT NOT NULL,
+    query_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY(user_id) REFERENCES Users(id)
 );
 
 
