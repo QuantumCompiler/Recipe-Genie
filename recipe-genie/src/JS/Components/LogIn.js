@@ -5,7 +5,6 @@ import { Box, Card, CardContent, Typography, FormControl, TextField, Button } fr
 export default function Login() {
     const [username, setUserName] = useState('');
     const [password, setPassword] = useState('');
-
     const handleLogin = (e) => {
         e.preventDefault();
         if (username === "" || password === "") {
@@ -14,7 +13,6 @@ export default function Login() {
             return;
         }
     }
-
     return (
         <div
             style={{
@@ -68,24 +66,11 @@ export default function Login() {
                                 onChange={(e) => setPassword(e.target.value)}
                             />
                         </FormControl>
-                        <Box
-                            sx={{
-                                display: 'flex',
-                                flexDirection: 'row',
-                                justifyContent: 'center',
-                                gap: 2,
-                            }}
-                        >
-                            <Link
-                                style={{
-                                    textDecoration: 'none',
-                                    color: 'blue',
-                                }}
-                                to='/register'
-                            >Register</Link>
-                        </Box>
                         <Button type="submit" variant="contained" color="primary">
                             Log In
+                        </Button>
+                        <Button component={Link} to='/register' variant='contained' color='primary'>
+                                Register
                         </Button>
                     </Box>
                 </CardContent>
