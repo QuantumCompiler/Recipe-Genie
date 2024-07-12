@@ -133,6 +133,7 @@ export default function CreateRecipe() {
 
     const sendPostRequest = async () => {
         try {
+            console.log("Creating the post request and sending.")
             const response = await axios.post('http://localhost:3308/post', {
                 data: "Hello from React"
             });

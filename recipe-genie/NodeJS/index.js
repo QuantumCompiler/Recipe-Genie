@@ -30,7 +30,8 @@ app.listen(port, async () => {
 
 // Handle POST request from React
 app.post("/post", (req, res) => {
-    console.log("Connected to React");
+    console.log("Connected to React!!!!!");
     console.log("Data received:", req.body);
-    res.json({ message: "Data received successfully" });
+    // res.json({ message: "Data received successfully" });
+    res.send("Hello from Node!!!");
 });
