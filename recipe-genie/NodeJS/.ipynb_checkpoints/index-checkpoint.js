@@ -5,7 +5,6 @@ const cors = require('cors');
 const db = require('./database'); 
 
 const app = express();
-//The port variable 3000 will change as we run on a a real server 
 const port = process.env.PORT || 3308;
 
 // Middleware to parse JSON requests
@@ -24,17 +23,6 @@ app.get('/', (req, res) => {
             </body>
         </html>
     `);
-});
-
-
-// Route to test the database connection by fetching all users. Tests SQLite and Node.JS.connection 
-app.get('/test-db', (req, res) => {
-    db.all(`SELECT id, username FROM Users`, [], (err, rows) => {
-        if (err) {
-            return res.status(500).json({ error: err.message });
-        }
-        res.json({ users: rows });
-    });
 });
 
 // Example route to insert a user, with password hashing
@@ -70,11 +58,4 @@ app.listen(port, async () => {
     console.log(`Server running on port ${port}`);
     const open = (await import('open')).default;
     await open(`http://localhost:${port}`);
-});
-
-// Handle POST request from React
-app.post("/post", (req, res) => {
-    console.log("Connected to React");
-    console.log("Data received:", req.body);
-    res.json({ message: "Data received successfully" });
 });
