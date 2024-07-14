@@ -127,4 +127,17 @@
   - help Define custom method in javascript and figure out interaction with the database
   - help with the unit testing and comments 
 
+## Tyler Hopkins:
+- Completed:
+  - Learning foundational JS through Codecademy.
+  - Implemented a method of communication between the Node Server and the React app. 
+  - Pictures:
+    <p align="center">
+      <img src="Status Update Images/Week-8-Node-Console.png" width="1000">
+    </p>
+  
+- In Progress:
+  - Create extra JSON file for test output from server.
+  - Research how to create Unit Tests for Node.js.
+  - Implement base Unit Tests for the server that would likely be in a future milestone.
   
