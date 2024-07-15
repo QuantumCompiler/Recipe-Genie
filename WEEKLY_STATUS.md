@@ -140,4 +140,13 @@
   - Create extra JSON file for test output from server.
   - Research how to create Unit Tests for Node.js.
   - Implement base Unit Tests for the server that would likely be in a future milestone.
+ 
+  ## Jasmine Duran:
+- Completed:
+  -  Write txt for about page
+
+- In Progress:
+  - Create about page
+  - Learn more about React
+  - Create tests? For pages. 
   
