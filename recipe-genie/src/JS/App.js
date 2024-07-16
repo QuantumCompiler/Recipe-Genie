@@ -2,7 +2,7 @@ import React from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Dashboard from './Components/Dashboard';
 import CreateRecipe from './Components/CreateNewRecipe';
-import Login from './Components/Login.js';
+import Login from './Components/LogIn.js';
 import Register from './Components/Register';
 
 /*  App - The main application component
