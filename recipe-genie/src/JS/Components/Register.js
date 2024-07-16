@@ -21,7 +21,8 @@ export default function Register() {
         }
         else if (password === confirmPassword) {
             console.log('Passwords match');
-        }
+            //TODO: Send information to Database to add new username/password
+        } 
     }
 
     return (

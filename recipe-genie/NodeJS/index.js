@@ -4,6 +4,9 @@ const cors = require('cors');
 // Imports the database connection
 const db = require('./database'); 
 
+// Example route to insert a user, with password hashing
+const bcrypt = require('bcrypt');
+
 const app = express();
 //The port variable 3000 will change as we run on a a real server 
 const port = process.env.PORT || 3308;
@@ -36,9 +39,6 @@ app.get('/test-db', (req, res) => {
         res.json({ users: rows });
     });
 });
-
-// Example route to insert a user, with password hashing
-const bcrypt = require('bcrypt');
 
 app.post('/users', async (req, res) => {
     const { username, password } = req.body;
@@ -78,4 +78,42 @@ app.post("/post", (req, res) => {
     console.log("Data received:", req.body);
     // res.json({ message: "Data received successfully" });
     res.send("Hello from Node!!!");
+});
+
+// Recieve Username and Password from React
+// Requires input in format 
+
+async function isCorrectLogin(username, password) {
+    return new Promise((resolve, reject) => {
+        db.get(`SELECT password FROM Users WHERE username = ?`, [username], async (err, row) => {
+            if (err) {
+                console.error(err);
+                return reject(err);
+            }
+            if (!row) {
+                return resolve(false); // Username not found
+            }
+            try {
+                const match = await bcrypt.compare(password, row.password);
+                resolve(match);
+            } catch (error) {
+                console.error(error);
+                reject(error);
+            }
+        });
+    });
+}
+
+app.post("/login", async (req, res) => {
+    const { username, password } = req.body;
+    try {
+        const isLoggedIn = await isCorrectLogin(username, password);
+        if (isLoggedIn) {
+            res.status(200).json({ message: "Login successful" });
+        } else {
+            res.status(401).json({ message: "Invalid username or password" });
+        }
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
 });
