@@ -31,6 +31,7 @@ export default function CreateRecipe() {
     const [focusedIndex, setFocusedIndex] = useState(null);
     const [deleteIndex, setDeleteIndex] = useState(null);
     const [showCards, setShowCards] = useState(false);
+    const [data, setData] = useState(null);
 
     /*  AddInput - A function to add a new input to the inputs array
         Inputs:
@@ -144,6 +145,18 @@ export default function CreateRecipe() {
         }
     };
 
+    const GetOutputRequest = async () => {
+        try {
+            console.log("Requesting JSON data from Node.")
+            const response = await axios.get('http://localhost:3001/data')
+              .then(response => setData(response.data))
+              .catch(error => console.error('Error fetching data:', error));
+            console.log("The JSON data has been received!")
+            console.log(JSON.stringify(data, null, 2));
+        } catch (error) {
+            console.error('There was an error!', error);
+        }
+    };
     useEffect(() => {
         if (deleteIndex !== null) {
             DeleteInput(deleteIndex);
@@ -263,6 +276,13 @@ export default function CreateRecipe() {
                         onClick={sendPostRequest}
                     >
                         Send POST Request
+                    </Button>
+                    <Button
+                        color='primary'
+                        variant='contained'
+                        onClick={GetOutputRequest}
+                    >
+                        Get Output Request
                     </Button>
                 </Box>
             </Box>

@@ -1,5 +1,6 @@
 const express = require('express');
 const cors = require('cors');
+const sqlite3 = require('sqlite3').verbose();
 
 // Imports the database connection
 const db = require('./database'); 
@@ -65,6 +66,12 @@ app.get('/users', (req, res) => {
         res.json({ users: rows });
     });
 });
+
+// Handle Get request from React on extension /data
+app.get('/data', (req, res) => {
+    const jsonData = require('./returnData.json');
+    res.json(jsonData);
+  });
 
 app.listen(port, async () => {
     console.log(`Server running on port ${port}`);
