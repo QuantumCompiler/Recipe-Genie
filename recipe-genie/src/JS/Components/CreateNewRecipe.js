@@ -131,6 +131,8 @@ export default function CreateRecipe() {
         setShowCards(!showCards);
     }
 
+    //Testing posting a request. Should be deleted before turn in
+    //TODO: Delete before turn in.
     const sendPostRequest = async () => {
         try {
             console.log("Creating the post request and sending.")

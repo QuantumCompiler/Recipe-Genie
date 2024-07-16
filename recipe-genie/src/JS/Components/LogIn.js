@@ -1,16 +1,35 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Box, Card, CardContent, Typography, FormControl, TextField, Button } from '@mui/material';
+import axios from 'axios';
 
 export default function Login() {
     const [username, setUserName] = useState('');
     const [password, setPassword] = useState('');
-    const handleLogin = (e) => {
+    const handleLogin = async (e) => {
         e.preventDefault();
         if (username === "" || password === "") {
             console.log('Not all fields have been entered.')
             alert('All fields must be entered.')
             return;
+        } else {
+            // TODO: Send the Username and Password to whatever call we have on the Node side. 
+           try {
+                const response = await axios.post('http://localhost:3308/login', {
+                    username,
+                    password
+                });
+                if (response.status === 200) {
+                    console.log('Login successful:', response.data);
+                    // Redirect or perform any other action upon successful login
+                } else {
+                    console.log('Login failed:', response.data);
+                    alert('Invalid username or password.');
+                }
+            } catch (error) {
+                console.error('There was an error!', error);
+                alert('An error occurred during login. Please try again.');
+            }
         }
     }
     return (
