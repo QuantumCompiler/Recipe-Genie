@@ -1,4 +1,4 @@
---sql database 
+--sqlite database 
 
 -- Create Users table
 CREATE TABLE IF NOT EXISTS Users (
@@ -6,15 +6,6 @@ CREATE TABLE IF NOT EXISTS Users (
     username TEXT NOT NULL UNIQUE,
     password TEXT NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-);
-
--- Create Sessions table
-CREATE TABLE IF NOT EXISTS Sessions (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    user_id INTEGER,
-    session_token TEXT NOT NULL,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY(user_id) REFERENCES Users(id)
 );
 
 -- Create Recipes table
