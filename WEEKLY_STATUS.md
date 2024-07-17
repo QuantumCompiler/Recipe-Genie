@@ -128,3 +128,12 @@
   - help with the unit testing and comments 
 
   
+# Week 9 Progress:
+
+## Weston Brach:
+- Completed:
+  -  methods to add recipe, search recipe, and return JSON string
+  -  tested that the methods work and connect to the SQLite database. 
+
+- In Progress:
+  - Connect with Tyler and Jasmine to review database and ensure the methods are working as expected. 
