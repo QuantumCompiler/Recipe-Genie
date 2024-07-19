@@ -170,3 +170,13 @@
   - Waiting for backend team to implement methods to communicate with the frontend
   - Waiting for backend team to create username tables in database
   - Designing templates for other screens in the application
+
+
+# Week 9 Progress:
+- Completed:
+  - Created a login method for Taylor to transfer login info between the front end and the back end.
+  - Ensured that the login method would also reach out to the database to ask if the credentials are correct.
+- In Progress:
+  - Investigate errors with database at login. 
+  - Change the return value for the login page to a tuple return that can be easily enturpreted by the front end if success or not. 
+  - Test recipe calls from front end to back end.

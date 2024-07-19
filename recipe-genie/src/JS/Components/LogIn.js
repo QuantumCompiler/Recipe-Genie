@@ -25,6 +25,7 @@ export default function Login() {
                     if (isLoggedIn) {
                         console.log('Login successful:', foundUsername);
                         // Redirect or perform any other action upon successful login
+                        // [isLoggedIn, foundUsername] tuple return.
                     } else {
                         console.log('Login failed:', foundUsername);
                         alert('Invalid username or password.');
