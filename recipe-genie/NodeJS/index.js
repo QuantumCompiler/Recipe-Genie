@@ -107,12 +107,8 @@ async function isCorrectLogin(username, password) {
 app.post("/login", async (req, res) => {
     const { username, password } = req.body;
     try {
-        const isLoggedIn = await isCorrectLogin(username, password);
-        if (isLoggedIn) {
-            res.status(200).json({ message: "Login successful" });
-        } else {
-            res.status(401).json({ message: "Invalid username or password" });
-        }
+        const [isLoggedIn, foundUsername] = await isCorrectLogin(username, password);
+        res.status(200).json([isLoggedIn, foundUsername]);
     } catch (error) {
         res.status(500).json({ error: error.message });
     }
