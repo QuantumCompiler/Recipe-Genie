@@ -14,17 +14,24 @@ export default function Login() {
             return;
         } else {
             // TODO: Send the Username and Password to whatever call we have on the Node side. 
-           try {
+            try {
                 const response = await axios.post('http://localhost:3308/login', {
                     username,
                     password
                 });
+            
                 if (response.status === 200) {
-                    console.log('Login successful:', response.data);
-                    // Redirect or perform any other action upon successful login
+                    const [isLoggedIn, foundUsername] = response.data;
+                    if (isLoggedIn) {
+                        console.log('Login successful:', foundUsername);
+                        // Redirect or perform any other action upon successful login
+                    } else {
+                        console.log('Login failed:', foundUsername);
+                        alert('Invalid username or password.');
+                    }
                 } else {
-                    console.log('Login failed:', response.data);
-                    alert('Invalid username or password.');
+                    console.log('Unexpected response status:', response.status);
+                    alert('An unexpected error occurred.');
                 }
             } catch (error) {
                 console.error('There was an error!', error);
