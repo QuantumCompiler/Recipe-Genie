@@ -118,6 +118,12 @@
 
 # Week 8 Progress: 
 
+## Current Trello Board
+
+<p align="center">
+  <img src="Status Update Images/Trello Board - Week 8.png" width="1500">
+</p>
+
 ## Weston Brach:
 - Completed:
   -  continue learning javascript through codeacademy
@@ -141,12 +147,26 @@
   - Research how to create Unit Tests for Node.js.
   - Implement base Unit Tests for the server that would likely be in a future milestone.
  
-  ## Jasmine Duran:
+## Jasmine Duran:
 - Completed:
-  -  Write txt for about page
+  -  Wrote txt for about page
 
 - In Progress:
   - Create about page
   - Learn more about React
   - Create tests? For pages. 
   
+## Taylor Larrechea
+- Completed:
+  - Created GUI for Login screen
+    <p align="center">
+      <img src="Status Update Images/Login Screen - Week 8.png" width="1000">
+    </p>
+  - Created GUI for Register screen
+    <p align="center">
+      <img src="Status Update Images/Register Screen - Week 8.png" width="1000">
+    </p>
+- In Progress:
+  - Waiting for backend team to implement methods to communicate with the frontend
+  - Waiting for backend team to create username tables in database
+  - Designing templates for other screens in the application
