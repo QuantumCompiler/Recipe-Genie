@@ -173,6 +173,9 @@
 
 
 # Week 9 Progress:
+
+## Tyler Hopkins:
+
 - Completed:
   - Created a login method for Taylor to transfer login info between the front end and the back end.
   - Ensured that the login method would also reach out to the database to ask if the credentials are correct.
@@ -180,3 +183,15 @@
   - Investigate errors with database at login. 
   - Change the return value for the login page to a tuple return that can be easily enturpreted by the front end if success or not. 
   - Test recipe calls from front end to back end.
+  
+## Weston Brach
+  
+- Completed:
+  - added methods to add recipe, search recipe, and return JSON string
+   - implemented testing to show the methods work and connect to the SQLite database.
+
+- In Progress:
+  - Connect with Tyler and Jasmine to review database and ensure the methods are working as expected.
+  - SQL Design
+ 
+ 
