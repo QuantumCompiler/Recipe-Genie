@@ -32,25 +32,32 @@ app.get('/', (req, res) => {
 
 // Route to test the database connection by fetching all users. Tests SQLite and Node.JS.connection 
 app.get('/test-db', (req, res) => {
+    console.log('GET /test-db request received');
     db.all(`SELECT id, username FROM Users`, [], (err, rows) => {
         if (err) {
+            console.error('Database query error:', err.message);
             return res.status(500).json({ error: err.message });
         }
+        console.log('Database query successful:', rows);
         res.json({ users: rows });
     });
 });
 
 app.post('/users', async (req, res) => {
     const { username, password } = req.body;
+    console.log('POST /users request received with data:', req.body);
     try {
         const hashedPassword = await bcrypt.hash(password, 10);
         db.run(`INSERT INTO Users (username, password) VALUES (?, ?)`, [username, hashedPassword], function(err) {
             if (err) {
+                console.error('Database insert error:', err.message);
                 return res.status(500).json({ error: err.message });
             }
+            console.log('User inserted with ID:', this.lastID);
             res.status(201).json({ id: this.lastID });
         });
     } catch (error) {
+        console.error('Error hashing password:', error.message);
         res.status(500).json({ error: error.message });
     }
 });
@@ -58,10 +65,13 @@ app.post('/users', async (req, res) => {
 
 // Example route to get all users
 app.get('/users', (req, res) => {
+    console.log('GET /users request received');
     db.all(`SELECT id, username FROM Users`, [], (err, rows) => {
         if (err) {
+            console.error('Database query error:', err.message);
             return res.status(500).json({ error: err.message });
         }
+        console.log('Database query successful:', rows);
         res.json({ users: rows });
     });
 });
@@ -84,20 +94,24 @@ app.post("/post", (req, res) => {
 // Requires input in format 
 
 async function isCorrectLogin(username, password) {
+    console.log(`Checking login for user: ${username}`);
+
     return new Promise((resolve, reject) => {
         db.get(`SELECT password FROM Users WHERE username = ?`, [username], async (err, row) => {
             if (err) {
-                console.error(err);
+                console.error('Database query error:', err.message);
                 return reject(err);
             }
             if (!row) {
+                console.log('Username not found:', username);
                 return resolve(false); // Username not found
             }
             try {
                 const match = await bcrypt.compare(password, row.password);
+                console.log(`Password match for user ${username}:`, match);
                 resolve(match);
             } catch (error) {
-                console.error(error);
+                console.error('Error comparing passwords:', error.message);
                 reject(error);
             }
         });

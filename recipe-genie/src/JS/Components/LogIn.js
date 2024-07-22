@@ -15,11 +15,12 @@ export default function Login() {
         } else {
             // TODO: Send the Username and Password to whatever call we have on the Node side. 
             try {
+                console.log("Sending request to db.")
                 const response = await axios.post('http://localhost:3308/login', {
                     username,
                     password
                 });
-            
+                console.log("Response recieved from db.")
                 if (response.status === 200) {
                     const [isLoggedIn, foundUsername] = response.data;
                     if (isLoggedIn) {
@@ -34,7 +35,18 @@ export default function Login() {
                     alert('An unexpected error occurred.');
                 }
             } catch (error) {
-                console.error('There was an error!', error);
+                if (error.response) {
+                    // Server responded with a status other than 200 range
+                    console.error('Error response:', error.response.data);
+                    console.error('Error status:', error.response.status);
+                    console.error('Error headers:', error.response.headers);
+                } else if (error.request) {
+                    // Request was made but no response received
+                    console.error('Error request:', error.request);
+                } else {
+                    // Something happened in setting up the request
+                    console.error('Error message:', error.message);
+                }
                 alert('An error occurred during login. Please try again.');
             }
         }
