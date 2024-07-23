@@ -6,7 +6,7 @@ const fs = require('fs');
 const path = require('path');
 
 // Path to your SQLite database file
-const dbFile = path.join(__dirname, './Node JS/recipe_genie.db');
+const dbFile = path.join(__dirname, './recipe_genie.db');
 
 // Path to your SQL schema file
 const schemaFile = path.join(__dirname, 'create_database.sql');
@@ -15,7 +15,7 @@ const schemaFile = path.join(__dirname, 'create_database.sql');
 const schema = fs.readFileSync(schemaFile, 'utf8');
 
 // Connect to the database
-let db = new sqlite3.Database('./Node JS/recipe_genie.db', (err) => {
+let db = new sqlite3.Database('./recipe_genie.db', (err) => {
     if (err) {
         console.error(err.message);
     }

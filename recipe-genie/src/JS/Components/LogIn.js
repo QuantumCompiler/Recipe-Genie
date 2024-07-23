@@ -1,11 +1,14 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import { Box, Card, CardContent, Typography, FormControl, TextField, Button } from '@mui/material';
 import axios from 'axios';
 
 export default function Login() {
     const [username, setUserName] = useState('');
     const [password, setPassword] = useState('');
+    const navigate = useNavigate();
+    useEffect(() => {
+    }, []);
     const handleLogin = async (e) => {
         e.preventDefault();
         if (username === "" || password === "") {
@@ -13,47 +16,25 @@ export default function Login() {
             alert('All fields must be entered.')
             return;
         } else {
-            // TODO: Send the Username and Password to whatever call we have on the Node side. 
             try {
-                console.log("Sending request to db.")
                 const response = await axios.get('http://localhost:3308/login', {
                     params: {
                         username,
                         password
                     }
                 });
-                console.log("Response recieved from db.")
                 if (response.status === 200) {
                     const { isLoggedIn } = response.data; 
                     if (isLoggedIn) {
-                        console.log('Login successful:', username);
-                        // Redirect or perform any other action upon successful login
-                        //
-                        //
-                        //
-                        console.log("WE DID IT!!!!!!!!!")
+                        navigate('/dashboard', {state: {username}, replace: true});
                     } else {
-                        console.log('Login failed:', username);
                         alert('Invalid username or password.');
                     }
                 } else {
-                    console.log('Unexpected response status:', response.status);
                     alert('An unexpected error occurred.');
                 }
             } catch (error) {
-                if (error.response) {
-                    // Server responded with a status other than 200 range
-                    console.error('Error response:', error.response.data);
-                    console.error('Error status:', error.response.status);
-                    console.error('Error headers:', error.response.headers);
-                } else if (error.request) {
-                    // Request was made but no response received
-                    console.error('Error request:', error.request);
-                } else {
-                    // Something happened in setting up the request
-                    console.error('Error message:', error.message);
-                }
-                alert('An error occurred during login. Please try again.');
+                alert(`An error occurred during login.\n ${error} \nPlease try again.`);
             }
         }
     }

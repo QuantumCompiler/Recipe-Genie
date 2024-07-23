@@ -5,9 +5,6 @@ const bcrypt = require('bcrypt');
 // Imports the database connection
 const db = require('./database'); 
 
-// Example route to insert a user, with password hashing
-const bcrypt = require('bcrypt');
-
 const app = express();
 //The port variable 3000 will change as we run on a a real server 
 const port = process.env.PORT || 3308;
@@ -38,8 +35,6 @@ app.get('/', (req, res) => {
 
 app.listen(port, async () => {
     console.log(`Server running on port ${port}`);
-    const open = (await import('open')).default;
-    await open(`http://localhost:${port}`);
 });
 
 // Handle POST request from React
@@ -72,7 +67,7 @@ app.get('/test-db', (req, res) => {
 
 app.post('/users', async (req, res) => {
     const { username, password } = req.body;
-    console.log('POST /users request received with data:', req.body);
+    console.log('POST /users request received with data:');
     try {
         const hashedPassword = await bcrypt.hash(password, 10);
         db.run(`INSERT INTO Users (username, password) VALUES (?, ?)`, [username, hashedPassword], function(err) {
@@ -172,7 +167,7 @@ app.post('/search-recipe', (req, res) => {
         if (row) {
             res.json({ exists: true, recipe: row });
         } else {
-            res.json({ exists: false });
+            res.json({ exists: false, recipe: 'DNE' });
         }
     });
 });
@@ -196,7 +191,6 @@ app.post('/get-recipe-json', (req, res) => {
 // Combined Method
 app.post('/add-or-get-recipe', (req, res) => {
     const { user_id, ingredients, result } = req.body;
-
     db.get(`SELECT result FROM Recipes WHERE user_id = ? AND ingredients = ?`, [user_id, ingredients], (err, row) => {
         if (err) {
             console.error(err);  // Log the error
