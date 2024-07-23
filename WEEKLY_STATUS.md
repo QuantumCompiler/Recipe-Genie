@@ -194,4 +194,36 @@
   - Connect with Tyler and Jasmine to review database and ensure the methods are working as expected.
   - SQL Design
  
- 
+## Taylor Larrechea:
+
+- Completed:
+  - Finished implementation for handling the logging and registering of users and navigating to dashboard
+
+    <p align="center">
+      <img src="Status Update Images/Log In Screen - Week 9.png" width="1000">
+    </p>
+    <p align="center">
+      <img src="Status Update Images/Dashboard Screen - Week 9.png" width="1000">
+    </p>
+
+  - Implemented backend methods to check if a recipe is already in the database
+    - If it is, then we simply return the recipe that is already in the database
+
+    <p align="center">
+      <img src="Status Update Images/Recipe Exists 1 - Week 9.png" width="1000">
+    </p>
+    <p align="center">
+      <img src="Status Update Images/Recipe Exists 2 - Week 9.png" width="1000">
+    </p>
+
+    - If it is not, then we call the API to get the recipe and store it in the database
+
+    <p align="center">
+      <img src="Status Update Images/New Recipe - Week 9.png" width="1000">
+    </p>
+  
+- In Progress:
+  - Need to debug the handling of the history when navigating between pages and logging out
+  - Need to implement other UI screens
+  - Need to build about page with Jasmine
+  - Need to write more unit tests for rendering of pages
