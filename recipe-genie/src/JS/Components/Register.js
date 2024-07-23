@@ -1,13 +1,14 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Box, Card, CardContent, Typography, FormControl, TextField, Button } from '@mui/material';
+import axios from 'axios';
 
 export default function Register() {
     const [username, setUserName] = useState('');
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
 
-    const handleRegister = (e) => {
+    const handleRegister = async (e) => {
         e.preventDefault();
         if (username === "" || password === "" || confirmPassword === "") {
             console.log('Not all fields have been entered.');
@@ -22,6 +23,25 @@ export default function Register() {
         else if (password === confirmPassword) {
             console.log('Passwords match');
             //TODO: Send information to Database to add new username/password
+            try {
+                const response = await axios.post('http://localhost:3308/users', {
+                    username,
+                    password
+                });
+                
+                if (response.status === 201) {
+                    console.log('User registered successfully:', response.data);
+                    alert('User registered successfully.');
+                    // Redirect or perform any other action upon successful registration
+                } else {
+                    console.log('Unexpected response status:', response.status);
+                    alert('An unexpected error occurred.');
+                }
+            } catch (error) {
+                console.error('There was an error!', error);
+                alert('An error occurred during registration. Please try again.');
+            }
+
         } 
     }
 
