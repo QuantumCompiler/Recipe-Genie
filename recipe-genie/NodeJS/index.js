@@ -118,11 +118,13 @@ async function isCorrectLogin(username, password) {
     });
 }
 
-app.post("/login", async (req, res) => {
-    const { username, password } = req.body;
+app.get("/login", async (req, res) => {
+    const { username, password } = req.query; // Use req.query for GET request
+    console.log("Username: ", username)
+    console.log("Password: ", password)
     try {
-        const [isLoggedIn, foundUsername] = await isCorrectLogin(username, password);
-        res.status(200).json([isLoggedIn, foundUsername]);
+        const isLoggedIn = await isCorrectLogin(username, password);
+        res.status(200).json({ isLoggedIn });
     } catch (error) {
         res.status(500).json({ error: error.message });
     }
