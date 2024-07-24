@@ -194,4 +194,13 @@
   - Connect with Tyler and Jasmine to review database and ensure the methods are working as expected.
   - SQL Design
  
+ # Week 10:
  
+ ##Tyler Hopkins:
+ - Completed:
+    - Redesigned login method for back-end reaching out to front-end regarding login status.
+    - Initialized database utilizing schema.
+    - Designed registeration method for users to register a new username and password and add it to the database.
+- In Progress:
+    - Adding comments throughout the backend to explain the implementation. 
+    - Adding unit testing for some of the methods included in our Node.JS section.
