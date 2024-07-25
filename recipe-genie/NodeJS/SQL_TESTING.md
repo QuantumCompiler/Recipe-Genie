@@ -284,26 +284,9 @@ B. Recipe Functions
         -Notes: Ensure error handling of case where result is required but not provided. Verify that duplicate              recipes with the same user_id and ingredients are not created. 
         -Post-conditions: The recipe is added to the database if it was not present, or the existing recipe                details are retrieved.
     
-    
-    
-Summary Addressing Relevant Questions
-
-- What are the tables you are going to have in the database?
-
-- What are the fields of each table?
-
-- What are the constraints for those table fields?
-
-- What are the relationships between tables?
 
 
-- What are the functions that will be created to access the database?
 
+The four tables for this database revolve around the user and stored recipes.  All four include a distinct id as its primary key. The users table stores the username and its matching password, as well as the time it was created. The user queries table stores the id of the user (referencing the user table) , the ingredients ask for in a query, and a time stamp. Like the user queries table the recipes table also uses the user id, an ingredients field, and a time stamp, in addition to the result. The result field in recipes contains the actual detailed recipe instructions. Finally, the ingredients table links to the recipe table with its field “recipe_id”, and also contains the name, amount and unit for said ingredient. 
 
-- What are the tests to make sure those access routines work?
-
-
-- Which pages will need to access the database information?
-
-
-- What are the tests to make sure the pages access the correct data in the database?
+There are 9 functions used to access these databases. Database connection, create user, get all users, user login verification, and user login are used to manage and access the user-type databases. Add recipe, search recipe, get recipe JSON, and add or get recipe are used to manipulate the recipe databases. As show above in more detail, there are tests that show if the result is as intended for each of these functions. As for the pages that need to access the database information, the create new recipes page will need access to the recipes-type databases, the login and register pages will need access to the user databases and the view recipes and clear recipes pages will need access to all.  
