@@ -240,3 +240,12 @@
     - Adding comments throughout the backend to explain the implementation. 
     - Adding unit testing for some of the methods included in our Node.JS section.
 
+
+
+## Weston Brach:
+
+- Completed:
+    - SQL Design Milestone 
+- In Progress:
+    - Testing methods in Node.JS section  
+   
