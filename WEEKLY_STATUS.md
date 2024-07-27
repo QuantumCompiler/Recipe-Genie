@@ -194,6 +194,14 @@
   - Connect with Tyler and Jasmine to review database and ensure the methods are working as expected.
   - SQL Design
  
+## Jasmine Duran:
+  
+- Completed:
+  - Work on project milestone 5
+
+- In Progress:
+  - Connect with Taylot to get the about page up and runnning 
+ 
 
  # Week 10:
 
@@ -247,5 +255,13 @@
 - Completed:
     - SQL Design Milestone 
 - In Progress:
-    - Testing methods in Node.JS section  
+    - Testing methods in Node.JS section
+ 
+## Jasmine Duran:
+  
+- Completed:
+  - Work on project milestone 5
+
+- In Progress:
+  - Connect with Taylor to get the about page up and runnning 
    
