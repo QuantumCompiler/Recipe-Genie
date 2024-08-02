@@ -5,6 +5,7 @@ import CreateRecipe from './Components/CreateNewRecipe';
 import Dashboard from './Components/Dashboard';
 import Login from './Components/LogIn.js';
 import Register from './Components/Register';
+import Settings from './Components/Settings.js';
 
 export default function App() {
   return (
@@ -16,6 +17,7 @@ export default function App() {
           <Route path='/create-recipe' element={<CreateRecipe />}/>
           <Route path='/dashboard' element={<Dashboard />}/>
           <Route path='/register' element={<Register />}/>
+          <Route path='/settings' element={<Settings />}/>
         </Routes>
       </div>
     </Router>

@@ -155,6 +155,9 @@ export default function CreateRecipe() {
                 <ListItem onClick={() => navigate('/dashboard', {state: {username}})} sx={{cursor: 'pointer', textAlign: 'center'}}>
                     <ListItemText primary="Dashboard" />
                 </ListItem>
+                <ListItem onClick={() => navigate('/settings', {state: {username}})} sx={{cursor: 'pointer', textAlign: 'center'}}>
+                    <ListItemText primary="Settings" />
+                </ListItem>
             </List>
         </Box>
     );

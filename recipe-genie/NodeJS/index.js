@@ -156,6 +156,22 @@ app.post('/add-recipe', (req, res) => {
     });
 });
 
+// Delete all recipes
+app.post('/delete-all-recipes', (req, res) => {
+    const { user_id } = req.body;
+    db.run(`DELETE FROM Recipes WHERE user_id = ?`, [user_id], function(err) {
+        if (err) {
+            console.error(err);
+            return res.status(500).json({ error: err.message });
+        }
+        if (this.changes > 0) {
+            res.json({ success: true, message: `${this.changes} recipes deleted.` });
+        } else {
+            res.json({ success: false, message: 'No recipes found to delete.' });
+        }
+    });
+});
+
 // Search Recipe Method
 app.post('/search-recipe', (req, res) => {
     const { user_id, ingredients } = req.body;

@@ -1,10 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import AppBar from '@mui/material/AppBar';
-import Box from '@mui/material/Box';
-import Toolbar from '@mui/material/Toolbar';
-import Typography from '@mui/material/Typography';
-import IconButton from '@mui/material/IconButton';
+import { AppBar, Box, Button, Grid, IconButton, Toolbar, Typography } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import Drawer from '@mui/material/Drawer';
 import List from '@mui/material/List';
@@ -12,13 +8,11 @@ import ListItem from '@mui/material/ListItem';
 import ListItemText from '@mui/material/ListItemText';
 import LogoutIcon from '@mui/icons-material/Logout';
 import axios from 'axios';
-import RecipeCards from './RecipeCards.js';
 
-export default function Dashboard() {
+export default function Settings() {
     const location = useLocation();
     const username = location.state?.username || 'Guest';
     const [drawerOpen, setDrawerOpen] = useState(false);
-    const [isNotEmpty, setIsNotEmpty] = useState(false);
     const navigate = useNavigate();
     const Logout = () => {
         navigate('/', {replace: true});
@@ -43,19 +37,12 @@ export default function Dashboard() {
                 <ListItem onClick={() => navigate('/create-recipe', {state: {username}})} sx={{cursor: 'pointer', textAlign: 'center'}}>
                     <ListItemText primary="Create New Recipe"/>
                 </ListItem>
-                <ListItem onClick={() => navigate('/settings', {state: {username}})} sx={{cursor: 'pointer', textAlign: 'center'}}>
-                    <ListItemText primary="Settings"/>
+                <ListItem onClick={() => navigate('/dashboard', {state: {username}})} sx={{cursor: 'pointer', textAlign: 'center'}}>
+                    <ListItemText primary="Dashboard"/>
                 </ListItem>
             </List>
         </Box>
     );
-    useEffect(() => {
-        const fetchRecipe = async () => {
-            const [notEmpty] = await selectRecipe(username);
-            setIsNotEmpty(notEmpty);
-        };
-        fetchRecipe();
-    }, [username]);
     return (
         <Box sx={{ flexGrow: 1 }}>
             <AppBar position="static">
@@ -75,7 +62,7 @@ export default function Dashboard() {
                     <Box sx={{ width: '40px' }}/>
                     <Box sx={{ flexGrow: 1, textAlign: 'center', display: 'flex', justifyContent: 'center' }}>
                         <Typography variant="h6" component="div">
-                            Dashboard
+                            Settings
                         </Typography>
                     </Box>
                     <Box sx={{ display: 'flex', alignItems: 'center' }}>
@@ -103,32 +90,75 @@ export default function Dashboard() {
                 {list()}
             </Drawer>
             <Box height={'20px'}/>
-            <Box
+            <Grid
                 sx={{
+                    display: 'flex',
+                    flexDirection: 'column',
                     justifyContent: 'center',
-                    textAlign: 'center'
+                    backgroundColor: '#f0f0f0',
+                    alignItems: 'center',
+                    pt: 3,
+                    pb: 5,
                 }}
             >
-                {isNotEmpty ? 
-                <Typography>
-                    Hello, {username}. Welcome back. Previous recipe:<br/>
-                </Typography> : 
-                <Typography>
-                    Hello, {username}. Navigate to Create New Recipe to create a new recipe. <br/>
-                </Typography>}
-                {isNotEmpty ? 
-                    <Box
-                        sx={{
-                            display: 'flex',
-                            justifyContent: 'center',
-                        }}
+                <Box
+                    sx={{
+                        width: `${window.innerWidth / 2}px`,
+                        bgcolor: 'white',
+                        p: 3,
+                        borderRadius: 1,
+                        boxShadow: 3,
+                        textAlign: 'center',
+                    }}
+                >
+                    <Typography>
+                        User History
+                    </Typography>
+                    <Box height={'20px'}/>
+                    <Button
+                        color='primary'
+                        variant='contained'
+                        onClick={() => deleteDBEntries(username)}
                     >
-                        <RecipeCards/>
-                    </Box>
-                : ""}
-            </Box>
+                        Clear Recipes
+                    </Button>
+                </Box>
+            </Grid>
         </Box>
     );
+}
+
+async function deleteAllRecipes(userName) {
+    let result = false;
+    let response = '';
+    try {
+        const response = await axios.post('http://localhost:3308/delete-all-recipes', {
+            user_id: userName,
+        });
+        if (response.status === 200) {
+            const { success, message } = response.data;
+            result = success;
+            response = message;
+            return [result, response];
+        }
+    } catch (error) {
+        console.error(`Error occurred: ${error.message}`);
+    }
+    return [result, response];
+}
+
+async function deleteDBEntries(userName) {
+    var data = await grabRecipes(userName);
+    if (data[0] === true) {
+        let text = `Are you sure that you want to delete all recipes that you have created?\n\nYou currently have ${data[1].length} recipe entries.`;
+        if (window.confirm(text) === true) {
+            await deleteAllRecipes(userName);
+        } else {
+            console.log('Selected false');
+        }
+    } else {
+        return;
+    }
 }
 
 async function grabRecipes(userName) {
@@ -148,26 +178,4 @@ async function grabRecipes(userName) {
         console.error(`Error occurred: ${error.message}`);
     }
     return [isNotEmpty, userRecipes];
-}
-
-async function selectRecipe(userName) {
-    let results = await grabRecipes(userName);
-    if (results[0] === false) {
-        return [false, []];
-    } else {
-        var numOfRecipes = results[1].length;
-        var randomRecipeNum = getRandomInt(0, numOfRecipes);
-        var randomRecipe = results[1][randomRecipeNum].result;
-        if (localStorage.length > 0) {
-            localStorage.clear();
-        }
-        localStorage.setItem('NewRecipe', randomRecipe);
-        return [true, results[1]];
-    }
-}
-
-function getRandomInt(min, max) {
-    min = Math.ceil(min);
-    max = Math.floor(max);
-    return Math.floor(Math.random() * (max - min)) + min;
 }
