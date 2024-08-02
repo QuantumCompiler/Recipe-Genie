@@ -172,6 +172,22 @@ app.post('/search-recipe', (req, res) => {
     });
 });
 
+// Grab all recipes
+app.post('/grab-all-recipes', (req, res) => {
+    const { user_id } = req.body;
+    db.all(`SELECT * FROM Recipes WHERE user_id = ?`, [user_id], (err, rows) => {
+        if (err) {
+            console.error(err);
+            return res.status(500).json({ error: err.message });
+        }
+        if (rows.length > 0) {
+            res.json({ notEmpty: true, recipes: rows });
+        } else {
+            res.json({ notEmpty: false, recipes: [] });
+        }
+    });
+});
+
 // Return JSON String Method
 app.post('/get-recipe-json', (req, res) => {
     const { user_id, ingredients } = req.body;

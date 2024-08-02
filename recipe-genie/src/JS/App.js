@@ -1,7 +1,8 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import Dashboard from './Components/Dashboard';
+import About from './Components/About.js';
 import CreateRecipe from './Components/CreateNewRecipe';
+import Dashboard from './Components/Dashboard';
 import Login from './Components/LogIn.js';
 import Register from './Components/Register';
 
@@ -11,9 +12,10 @@ export default function App() {
       <div className='App'>
         <Routes>
           <Route path='/' element={<Login />}/>
-          <Route path='/register' element={<Register />}/>
+          <Route path='/about' element={<About />}/>
+          <Route path='/create-recipe' element={<CreateRecipe />}/>
           <Route path='/dashboard' element={<Dashboard />}/>
-          <Route path='create-recipe' element={<CreateRecipe />}/>
+          <Route path='/register' element={<Register />}/>
         </Routes>
       </div>
     </Router>

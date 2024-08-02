@@ -1,18 +1,28 @@
 import { Box, Button, Grid, Typography, FormControl, TextField, IconButton } from '@mui/material';
 import React, { useState, useEffect, useCallback } from 'react';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import DeleteIcon from '@mui/icons-material/Delete';
 import AddCircle from '@mui/icons-material/AddCircle';
 import SpoonAPI from '../Utilities/SpoonAPI.js';
 import RecipeCards from './RecipeCards.js';
+import AppBar from '@mui/material/AppBar';
+import Toolbar from '@mui/material/Toolbar';
+import MenuIcon from '@mui/icons-material/Menu';
+import Drawer from '@mui/material/Drawer';
+import List from '@mui/material/List';
+import ListItem from '@mui/material/ListItem';
+import ListItemText from '@mui/material/ListItemText';
+import LogoutIcon from '@mui/icons-material/Logout';
 
 export default function CreateRecipe() {
+    const location = useLocation();
+    const username = location.state?.username || 'Guest';
+    const navigate = useNavigate();
     const [inputs, setInputs] = useState([{ value: '' }]);
     const [focusedIndex, setFocusedIndex] = useState(null);
     const [deleteIndex, setDeleteIndex] = useState(null);
+    const [drawerOpen, setDrawerOpen] = useState(false);
     const [showCards, setShowCards] = useState(false);
-    const location = useLocation();
-    const username = location.state?.username || 'Guest';
     /*  AddInput - A function to add a new input to the inputs array
         Inputs:
             None
@@ -71,6 +81,9 @@ export default function CreateRecipe() {
         });
         setInputs(newInputs);
     }
+    const Logout = () => {
+        navigate('/', {replace: true});
+    }
     /*  Submit - A function to handle the form submission
         Inputs:
             event: The event object containing the form data
@@ -101,7 +114,7 @@ export default function CreateRecipe() {
             ingArray.sort((a, b) => {
                 return a.value.localeCompare(b.value);
             });
-            var ret = await SpoonAPI(ingArray, {username}, 10, 1, true);
+            await SpoonAPI(ingArray, {username}, 10, 1, true);
             ToggleCards();
         }
     }
@@ -122,97 +135,167 @@ export default function CreateRecipe() {
             setDeleteIndex(null);
         }
     }, [deleteIndex, DeleteInput]);
-    return (
-        <Grid
-            sx={{
-                display: 'flex',
-                flexDirection: 'column',
-                justifyContent: 'center',
-                backgroundColor: '#f0f0f0',
-                alignItems: 'center',
-                pt: 5,
-                pb: 5,
-            }}
+    const ToggleDrawer = (open) => (event) => {
+        if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
+            return;
+        }
+        setDrawerOpen(open);
+    };
+    const list = () => (
+        <Box
+            sx={{ width: 250 }}
+            role="presentation"
+            onClick={ToggleDrawer(false)}
+            onKeyDown={ToggleDrawer(false)}
         >
-            <Box
-                component="form"
-                onSubmit={Submit}
+            <List>
+                <ListItem onClick={() => navigate('/about', {state: {username}})} sx={{cursor: 'pointer', textAlign: 'center'}}>
+                    <ListItemText primary="About" />
+                </ListItem>
+                <ListItem onClick={() => navigate('/dashboard', {state: {username}})} sx={{cursor: 'pointer', textAlign: 'center'}}>
+                    <ListItemText primary="Dashboard" />
+                </ListItem>
+            </List>
+        </Box>
+    );
+    return (
+        <Box sx={{ flexGrow: 1 }}>
+            <AppBar position="static">
+                <Toolbar sx={{ backgroundColor: '#272727', display: 'flex', justifyContent: 'space-between' }}>
+                    <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                        <IconButton
+                            size="large"
+                            edge="start"
+                            color="inherit"
+                            aria-label="menu"
+                            sx={{ mr: 2 }}
+                            onClick={ToggleDrawer(true)}
+                        >
+                            <MenuIcon />
+                        </IconButton>
+                    </Box>
+                    <Box sx={{ width: '40px' }}/>
+                    <Box sx={{ flexGrow: 1, textAlign: 'center', display: 'flex', justifyContent: 'center' }}>
+                        <Typography variant="h6" component="div">
+                            Create New Recipe
+                        </Typography>
+                    </Box>
+                    <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                        <Typography variant="body1" component="div" sx={{ ml: 'auto' }}>
+                            {username}
+                        </Typography>
+                        <IconButton 
+                            size="small"
+                            edge="end"
+                            color="inherit"
+                            aria-label="logout"
+                            sx={{ ml: 2 }}
+                            onClick={() => Logout()}
+                        >
+                            <LogoutIcon />
+                        </IconButton>
+                    </Box>
+                </Toolbar>
+            </AppBar>
+            <Drawer
+                anchor="left"
+                open={drawerOpen}
+                onClose={ToggleDrawer(false)}
+            >
+                {list()}
+            </Drawer>
+            <Box height={'10px'}/>
+            <Grid
                 sx={{
-                    width: `${window.innerWidth / 2}px`,
-                    bgcolor: 'white',
-                    p: 3,
-                    borderRadius: 1,
-                    boxShadow: 3,
+                    display: 'flex',
+                    flexDirection: 'column',
+                    justifyContent: 'center',
+                    backgroundColor: '#f0f0f0',
+                    alignItems: 'center',
+                    pt: 3,
+                    pb: 5,
                 }}
             >
-                <Typography variant="h5" component="h1" gutterBottom textAlign="center">
-                    Create New Recipe For - {username}
-                </Typography>
-                {inputs.map((input, index) => (
-                    <Box key={index} sx={{ display: 'flex', alignItems: 'center', marginBottom: 2 }}>
-                        <FormControl fullWidth>
-                            <TextField
-                                label={`Ingredient ${index + 1}`}
-                                value={input.value}
-                                onChange={(event) => InputsChange(index, event)}
-                                variant="outlined"
-                                fullWidth
-                                onFocus={() => setFocusedIndex(index)}
-                                onBlur={() => setFocusedIndex(null)}
-                            />
-                        </FormControl>
-                        {focusedIndex === index && (
-                            <IconButton
-                                color="secondary"
-                                aria-label="delete"
-                                onMouseDown={() => setDeleteIndex(index)}
-                                sx={{ marginLeft: 2 }}
-                            >
-                                <DeleteIcon />
-                            </IconButton>
-                        )}
+                <Box
+                    component="form"
+                    onSubmit={Submit}
+                    sx={{
+                        width: `${window.innerWidth / 2}px`,
+                        bgcolor: 'white',
+                        p: 3,
+                        borderRadius: 1,
+                        boxShadow: 3,
+                    }}
+                >
+                    <Typography variant="h5" component="h1" gutterBottom textAlign="center">
+                        Enter Ingredients
+                    </Typography>
+                    {inputs.map((input, index) => (
+                        <Box key={index} sx={{ display: 'flex', alignItems: 'center', marginBottom: 2 }}>
+                            <FormControl fullWidth>
+                                <TextField
+                                    label={`Ingredient ${index + 1}`}
+                                    value={input.value}
+                                    onChange={(event) => InputsChange(index, event)}
+                                    variant="outlined"
+                                    fullWidth
+                                    onFocus={() => setFocusedIndex(index)}
+                                    onBlur={() => setFocusedIndex(null)}
+                                />
+                            </FormControl>
+                            {focusedIndex === index && (
+                                <IconButton
+                                    color="secondary"
+                                    aria-label="delete"
+                                    onMouseDown={() => setDeleteIndex(index)}
+                                    sx={{ marginLeft: 2 }}
+                                >
+                                    <DeleteIcon />
+                                </IconButton>
+                            )}
+                        </Box>
+                    ))}
+                    <Box
+                        sx={{
+                            display: 'flex',
+                            justifyContent: 'center',
+                            mt: 2,
+                        }}
+                    >
+                        <IconButton 
+                            color="secondary" 
+                            aria-label='add'
+                            onClick={AddInput}
+                        >
+                            <AddCircle/>
+                        </IconButton>
                     </Box>
-                ))}
-                <Box
-                    sx={{
-                        display: 'flex',
-                        justifyContent: 'center',
-                        mt: 2,
-                    }}
-                >
-                    <IconButton 
-                        color="secondary" 
-                        aria-label='add'
-                        onClick={AddInput}
+                    <Box
+                        sx={{
+                            display: 'flex',
+                            justifyContent: 'center',
+                            gap: 2,
+                            mt: 2,
+                        }}
                     >
-                        <AddCircle/>
-                    </IconButton>
+                        <Button
+                            color='primary'
+                            variant='contained'
+                            onClick={Submit}
+                        >
+                            Create Recipe
+                        </Button>
+                        <Button
+                            color='secondary'
+                            variant='contained'
+                            onClick={DeleteAllInputs}
+                        >
+                            Clear
+                        </Button>
+                    </Box>
                 </Box>
-                <Box
-                    sx={{
-                        display: 'flex',
-                        justifyContent: 'center',
-                        gap: 2,
-                        mt: 2,
-                    }}
-                >
-                    <Button
-                        color='primary'
-                        variant='contained'
-                        onClick={Submit}
-                    >
-                        Create Recipe
-                    </Button>
-                    <Button
-                        color='secondary'
-                        variant='contained'
-                        onClick={DeleteAllInputs}
-                    >
-                        Clear
-                    </Button>
-                </Box>
-            </Box>
-            {showCards && <RecipeCards />}
-        </Grid>
+                {showCards && <RecipeCards />}
+            </Grid>
+        </Box>
     );
 }
