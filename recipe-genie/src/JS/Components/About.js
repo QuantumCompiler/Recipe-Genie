@@ -40,6 +40,9 @@ export default function About() {
                 <ListItem onClick={() => navigate('/dashboard', {state: {username}})} sx={{cursor: 'pointer', textAlign: 'center'}}>
                     <ListItemText primary="Dashboard"/>
                 </ListItem>
+                <ListItem onClick={() => navigate('/previous-recipes', {state: {username}})} sx={{cursor: 'pointer', textAlign: 'center'}}>
+                    <ListItemText primary="Previous Recipes"/>
+                </ListItem>
                 <ListItem onClick={() => navigate('/settings', {state: {username}})} sx={{cursor: 'pointer', textAlign: 'center'}}>
                     <ListItemText primary="Settings"/>
                 </ListItem>

@@ -1,28 +1,42 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { AppBar, Box, Button, Grid, IconButton, Toolbar, Typography } from '@mui/material';
+import { AppBar, Box, IconButton, Toolbar, Typography, Drawer, List, ListItem, ListItemText, Grid } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
-import Drawer from '@mui/material/Drawer';
-import List from '@mui/material/List';
-import ListItem from '@mui/material/ListItem';
-import ListItemText from '@mui/material/ListItemText';
 import LogoutIcon from '@mui/icons-material/Logout';
+import PreviousCards from './PreviousCards';
 import axios from 'axios';
+import RecipeCards from './RecipeCards';
 
-export default function Settings() {
+export default function PreviousRecipes() {
     const location = useLocation();
     const username = location.state?.username || 'Guest';
     const [drawerOpen, setDrawerOpen] = useState(false);
+    const [searches, setSearches] = useState([]);
+    const [selectedRecipe, setSelectedRecipe] = useState('');
+    const [showRecipe, setShowRecipe] = useState(false);
     const navigate = useNavigate();
+
+    useEffect(() => {
+        const fetchSearches = async () => {
+            const [isNotEmpty, userRecipes] = await grabRecipes(username);
+            if (isNotEmpty) {
+                setSearches(userRecipes);
+            }
+        };
+        fetchSearches();
+    }, [username]);
+
     const Logout = () => {
-        navigate('/', {replace: true});
-    }
+        navigate('/', { replace: true });
+    };
+
     const toggleDrawer = (open) => (event) => {
         if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
             return;
         }
         setDrawerOpen(open);
     };
+
     const list = () => (
         <Box
             sx={{ width: 250 }}
@@ -31,21 +45,37 @@ export default function Settings() {
             onKeyDown={toggleDrawer(false)}
         >
             <List>
-                <ListItem onClick={() => navigate('/about', {state: {username}})} sx={{cursor: 'pointer', textAlign: 'center'}}>
-                    <ListItemText primary="About"/>
+                <ListItem onClick={() => navigate('/about', { state: { username } })} sx={{ cursor: 'pointer', textAlign: 'center' }}>
+                    <ListItemText primary="About" />
                 </ListItem>
-                <ListItem onClick={() => navigate('/create-recipe', {state: {username}})} sx={{cursor: 'pointer', textAlign: 'center'}}>
-                    <ListItemText primary="Create New Recipe"/>
+                <ListItem onClick={() => navigate('/create-recipe', { state: { username } })} sx={{ cursor: 'pointer', textAlign: 'center' }}>
+                    <ListItemText primary="Create New Recipe" />
                 </ListItem>
-                <ListItem onClick={() => navigate('/dashboard', {state: {username}})} sx={{cursor: 'pointer', textAlign: 'center'}}>
-                    <ListItemText primary="Dashboard"/>
+                <ListItem onClick={() => navigate('/dashboard', { state: { username } })} sx={{ cursor: 'pointer', textAlign: 'center' }}>
+                    <ListItemText primary="Dashboard" />
                 </ListItem>
-                <ListItem onClick={() => navigate('/previous-recipes', {state: {username}})} sx={{cursor: 'pointer', textAlign: 'center'}}>
-                    <ListItemText primary="Previous Recipes"/>
+                <ListItem onClick={() => navigate('/settings', { state: { username } })} sx={{ cursor: 'pointer', textAlign: 'center' }}>
+                    <ListItemText primary="Settings" />
                 </ListItem>
             </List>
         </Box>
     );
+
+    const handleRecipeClick = (recipe) => {
+        if (showRecipe) {
+            setShowRecipe(false);
+            setTimeout(() => {
+                localStorage.setItem('NewRecipe', recipe.result);
+                setSelectedRecipe(recipe.result);
+                setShowRecipe(true);
+            }, 1);
+        } else {
+            localStorage.setItem('NewRecipe', recipe.result);
+            setSelectedRecipe(recipe.result);
+            setShowRecipe(true);
+        }
+    };
+
     return (
         <Box sx={{ flexGrow: 1 }}>
             <AppBar position="static">
@@ -62,23 +92,23 @@ export default function Settings() {
                             <MenuIcon />
                         </IconButton>
                     </Box>
-                    <Box sx={{ width: '40px' }}/>
+                    <Box sx={{ width: '40px' }} />
                     <Box sx={{ flexGrow: 1, textAlign: 'center', display: 'flex', justifyContent: 'center' }}>
                         <Typography variant="h6" component="div">
-                            Settings
+                            Previous Recipes
                         </Typography>
                     </Box>
                     <Box sx={{ display: 'flex', alignItems: 'center' }}>
                         <Typography variant="body1" component="div" sx={{ ml: 'auto' }}>
                             {username}
                         </Typography>
-                        <IconButton 
+                        <IconButton
                             size="small"
                             edge="end"
                             color="inherit"
                             aria-label="logout"
                             sx={{ ml: 2 }}
-                            onClick={() => Logout()}
+                            onClick={Logout}
                         >
                             <LogoutIcon />
                         </IconButton>
@@ -92,7 +122,7 @@ export default function Settings() {
             >
                 {list()}
             </Drawer>
-            <Box height={'20px'}/>
+            <Box height={'20px'} />
             <Grid
                 sx={{
                     display: 'flex',
@@ -104,64 +134,11 @@ export default function Settings() {
                     pb: 5,
                 }}
             >
-                <Box
-                    sx={{
-                        width: `${window.innerWidth / 2}px`,
-                        bgcolor: 'white',
-                        p: 3,
-                        borderRadius: 1,
-                        boxShadow: 3,
-                        textAlign: 'center',
-                    }}
-                >
-                    <Typography>
-                        User History
-                    </Typography>
-                    <Box height={'20px'}/>
-                    <Button
-                        color='primary'
-                        variant='contained'
-                        onClick={() => deleteDBEntries(username)}
-                    >
-                        Clear Recipes
-                    </Button>
-                </Box>
+                <PreviousCards userName={username} searches={searches} onRecipeClick={handleRecipeClick} />
+                {showRecipe && <RecipeCards recipe={selectedRecipe} />}
             </Grid>
         </Box>
     );
-}
-
-async function deleteAllRecipes(userName) {
-    let result = false;
-    let response = '';
-    try {
-        const response = await axios.post('http://localhost:3308/delete-all-recipes', {
-            user_id: userName,
-        });
-        if (response.status === 200) {
-            const { success, message } = response.data;
-            result = success;
-            response = message;
-            return [result, response];
-        }
-    } catch (error) {
-        console.error(`Error occurred: ${error.message}`);
-    }
-    return [result, response];
-}
-
-async function deleteDBEntries(userName) {
-    var data = await grabRecipes(userName);
-    if (data[0] === true) {
-        let text = `Are you sure that you want to delete all recipes that you have created?\n\nYou currently have ${data[1].length} recipe entries.`;
-        if (window.confirm(text) === true) {
-            await deleteAllRecipes(userName);
-        } else {
-            console.log('Selected false');
-        }
-    } else {
-        return;
-    }
 }
 
 async function grabRecipes(userName) {

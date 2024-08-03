@@ -43,6 +43,9 @@ export default function Dashboard() {
                 <ListItem onClick={() => navigate('/create-recipe', {state: {username}})} sx={{cursor: 'pointer', textAlign: 'center'}}>
                     <ListItemText primary="Create New Recipe"/>
                 </ListItem>
+                <ListItem onClick={() => navigate('/previous-recipes', {state: {username}})} sx={{cursor: 'pointer', textAlign: 'center'}}>
+                    <ListItemText primary="Previous Recipes"/>
+                </ListItem>
                 <ListItem onClick={() => navigate('/settings', {state: {username}})} sx={{cursor: 'pointer', textAlign: 'center'}}>
                     <ListItemText primary="Settings"/>
                 </ListItem>
