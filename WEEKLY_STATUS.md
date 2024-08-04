@@ -307,3 +307,10 @@
   </p>
 
   - Fixed routing issues for all pages.
+  
+  ## Weston Brach:
+
+- Completed:
+    - Fist attempt at implementing user sessions and testing in separate files from index.js file. 
+- In Progress:
+    - Verify implementation and migrate into index.js if needed. 
