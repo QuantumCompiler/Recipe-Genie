@@ -203,7 +203,7 @@
   - Connect with Taylot to get the about page up and runnning 
  
 
- # Week 10:
+# Week 10:
 
 ## Taylor Larrechea:
 
@@ -248,8 +248,6 @@
     - Adding comments throughout the backend to explain the implementation. 
     - Adding unit testing for some of the methods included in our Node.JS section.
 
-
-
 ## Weston Brach:
 
 - Completed:
@@ -265,3 +263,47 @@
 - In Progress:
   - Connect with Taylor to get the about page up and runnning 
    
+# Week 11:
+
+## Taylor Larrechea:
+
+- Completed:
+  - Updated dashboard page to load a previous recipe from the user upon navigating to the dashboard page
+
+    <p align="center">
+      <img src="Status Update Images/Dashboard Screen - Week 11.png" width="1000">
+    </p>
+
+  - Created previous recipes page, page displays all the recipes that the user has created and allows them to view them upon clicking on the list tile
+
+  <p align="center">
+    <img src="Status Update Images/Previous Recipe 1 - Week 11.png" width="1000">
+  </p>
+
+  <p align="center">
+    <img src="Status Update Images/Previous Recipe 2 - Week 11.png" width="1000">
+  </p>
+
+  - Created settings page that allows users to delete all recipes that they have created.
+
+  <p align="center">
+    <img src="Status Update Images/Settings 1 - Week 11.png" width="1000">
+  </p>
+
+  <p align="center">
+    <img src="Status Update Images/Settings 2 - Week 11.png" width="1000">
+  </p>
+
+  - Started building the about page
+
+  <p align="center">
+    <img src="Status Update Images/About Week 11.png" width="1000">
+  </p>
+
+  - Added the navigation bar to the Create New Recipe page
+
+  <p align="center">
+    <img src="Status Update Images/Create New Recipe Screen - Week 11.png" width="1000">
+  </p>
+
+  - Fixed routing issues for all pages.
