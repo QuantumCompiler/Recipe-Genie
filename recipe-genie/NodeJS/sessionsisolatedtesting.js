@@ -1,6 +1,6 @@
 const request = require('supertest');
 const assert = require('assert');
-const app = require('./index'); 
+const app = require('./UserSessionsIsolated'); 
 
 describe('User Sessions', function() {
     // Using agent to maintain session
