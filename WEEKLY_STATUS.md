@@ -314,3 +314,10 @@
     - First attempt at implementing user sessions and testing in separate files from index.js file. 
 - In Progress:
     - Verify implementation and migrate into index.js if needed. 
+    
+# Week 12: 
+
+## Weston Brach:
+
+- In Progress:
+    - Milestone 6 and 7 
