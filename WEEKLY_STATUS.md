@@ -315,9 +315,21 @@
 - In Progress:
     - Verify implementation and migrate into index.js if needed. 
     
+  ## Tyler Hopkins:
+- Completed:
+    - Research on unit testing for the backend.
+- In Progress:
+    - Quality Assurance testing and preparation for presentation week next week.
+    
 # Week 12: 
 
 ## Weston Brach:
 
 - In Progress:
     - Milestone 6 and 7 
+    
+## Tyler Hopkins:
+- Completed:
+    - Quality Assurance testing.
+- In Progress:
+    - Milestone 6 & 7.
