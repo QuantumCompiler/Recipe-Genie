@@ -29,9 +29,9 @@ The Recipe Genie project was completed as planned in the project proposal. Users
 
 - Create an account
 - Log in
-- Create new recipes with listed ingredients
+- Compose new recipes with specified ingredients
 - View previously created recipes
-- Clear all previously created recipes
+- Delete all previously created recipes.
 
 ### What Was In The Middle Of Being Implemented
 
@@ -42,14 +42,14 @@ The features that were in the middle of being implemented at the time of the due
 
 ### What Was Planned For The Future
 
-The features that were planned for the future of the project if given more time were:
+The features that were planned for the future of the project, if given more time, were:
 
-- Dietary restrictions / preferences - Ability to filter recipes based on dietary restrictions or preferences
-- Favorite recipes - Ability to favorite recipes and view them in a separate list
-- Quantity of ingredients - Ability to specify the quantity of ingredients in a recipe
-- Recipe return cardinality - Ability to discern the number of recipes returned based on the number of ingredients inputted
-- Sorting of recipes - Ability to sort recipes based on different criteria
-- Styled recipe search - An ability to search for different styles of recipes (e.g. Italian, Mexican, etc.)
+- Dietary restrictions and preferences: The ability to filter recipes based on dietary restrictions or preferences.
+- Favorite recipes: The ability to favorite recipes and view them in a separate list.
+- Quantity of ingredients: The ability to specify the quantity of ingredients in a recipe.
+- Recipe return cardinality: The ability to determine the number of recipes returned based on the number of ingredients inputted.
+- Recipe sorting: The ability to sort recipes based on different criteria.
+- Styled recipe search: The ability to search for different styles of recipes (e.g., Italian, Mexican, etc.).
 
 ### Known Problems / Bugs
 
